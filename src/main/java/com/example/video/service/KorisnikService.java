@@ -26,4 +26,9 @@ public interface KorisnikService {
     Optional<Korisnik> findbyKorisnickoIme(String korisnickoIme);
 
     boolean changePassword(Long id, KorisnikPromenaLozinkeDto korisnikPromenaLozinkeDto);
+    
+    Korisnik findOneId(Long id);
+
+    Page<Korisnik> find(String eMail,String ime,String korIme,String prezime,String uloga,int pageNo );
+    
 }

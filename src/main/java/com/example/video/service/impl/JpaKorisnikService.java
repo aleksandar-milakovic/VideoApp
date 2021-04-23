@@ -85,4 +85,15 @@ public class JpaKorisnikService implements KorisnikService {
 
         return true;
     }
+
+	@Override
+	public Korisnik findOneId(Long id) {
+		return korisnikRepository.findOneById(id);
+	}
+
+	@Override
+	public Page<Korisnik> find(String eMail, String ime, String korIme, String prezime, String uloga, int pageNo) {
+		
+		return korisnikRepository.search(eMail, ime, korIme, prezime, uloga, PageRequest.of(pageNo, 3));
+	}
 }
