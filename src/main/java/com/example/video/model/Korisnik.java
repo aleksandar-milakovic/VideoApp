@@ -43,12 +43,12 @@ public class Korisnik {
     @Column
     private Boolean blokiran;
    
-    @OneToMany
+    @ManyToMany
     @JoinTable(name = "korisnik_pratioci", joinColumns = @JoinColumn(name = "korisnik_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "pratilac_id", referencedColumnName = "id"))
     private List<Korisnik> pratioci = new ArrayList<>();
     
-    @Column(nullable = false)
+    @Column
     private LocalDate datumReg;
     
     

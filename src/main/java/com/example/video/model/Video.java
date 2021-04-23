@@ -38,6 +38,9 @@ public class Video {
 	 	 @Enumerated(EnumType.STRING)
 	     private Vidljivost vidljivost;
 	 	 
+	 	 
+	 	 @Column
+	 	 private Boolean dozvoljeniKomentari;
 	 	 @Column
 	 	 private Boolean vidljivostRejtinga;
 	 	 
@@ -46,6 +49,9 @@ public class Video {
 	 	 
 	 	 @Column
 	 	 private Integer brojPregleda;
+	 	 
+	 	 
+	 	 
 	 	 
 	 	 @Column
 	 	 private LocalDate datumKreiranja;
@@ -158,6 +164,14 @@ public class Video {
 
 		public void setKomentari(List<Komentar> komentari) {
 			this.komentari = komentari;
+		}
+
+		public Boolean getDozvoljeniKomentari() {
+			return dozvoljeniKomentari;
+		}
+
+		public void setDozvoljeniKomentari(Boolean dozvoljeniKomentari) {
+			this.dozvoljeniKomentari = dozvoljeniKomentari;
 		}
 		
 		
