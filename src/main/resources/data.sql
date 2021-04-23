@@ -43,9 +43,9 @@ INSERT INTO komentar (id,sadrzaj,datum_kreiranja,vlasnik_id,video_id)
 VALUES (2,'SADRZAJ 2','2020-04-21',2,5);
 
 
-INSERT INTO like_dislike (id,itit_like,datum_kreiranja,video_id)
+INSERT INTO like_dislike (id,isit_like,datum_kreiranja,video_id)
 VALUES(1,true,'2020-04-22',6);
-INSERT INTO like_dislike (id,itit_like,datum_kreiranja,komentar_id)
+INSERT INTO like_dislike (id,isit_like,datum_kreiranja,komentar_id)
 VALUES(2,true,'2020-04-23',2);
 
 
