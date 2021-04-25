@@ -6,6 +6,7 @@ import java.time.format.DateTimeParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
 import com.example.video.model.Komentar;
 import com.example.video.model.Video;
@@ -13,7 +14,7 @@ import com.example.video.service.KomentarService;
 import com.example.video.service.KorisnikService;
 import com.example.video.service.VideoService;
 import com.example.video.web.dto.KomentarDTO;
-
+@Component
 public class KomentarDTOtoKomentar implements Converter<KomentarDTO, Komentar> {
 
 	@Autowired

@@ -123,7 +123,9 @@ public class KorisnikController {
         }
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
+    @PreAuthorize("hasAnyRole('ROLE_KORISNIK', 'ROLE_ADMIN')")
+
     @GetMapping
     public ResponseEntity<List<KorisnikDTO>> get(
     		@RequestParam(required = false ,defaultValue = "") String eMail,

@@ -13,7 +13,7 @@ public interface VideoService {
 
 	 Video save(Video video);
 
-	 void delete(Long id);
+	 Video delete(Long id);
 	 
 	 Video findOneId(Long id);
 

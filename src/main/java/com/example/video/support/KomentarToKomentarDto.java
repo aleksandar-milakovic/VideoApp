@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
 import com.example.video.model.Komentar;
 import com.example.video.model.Video;
 import com.example.video.web.dto.KomentarDTO;
 import com.example.video.web.dto.VideoDTO;
-
+@Component
 public class KomentarToKomentarDto implements Converter<Komentar, KomentarDTO> {
 
 	@Override

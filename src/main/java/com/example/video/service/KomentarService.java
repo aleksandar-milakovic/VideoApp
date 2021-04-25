@@ -11,7 +11,7 @@ public interface KomentarService {
 
 	 Komentar save(Komentar komentar);
 
-	 void delete(Long id);
+	 Komentar delete(Long id);
 	 
 	 Komentar findOneId(Long id);
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.video.model.Video;
 import com.example.video.repository.VideoRepository;
 import com.example.video.service.VideoService;
+import com.sun.el.stream.Optional;
 
 @Service
 public class JpaVideoService implements VideoService {
@@ -29,9 +30,17 @@ public class JpaVideoService implements VideoService {
 	}
 
 	@Override
-	public void delete(Long id) {
-		VideoRepository.deleteById(id);
+	public Video delete(Long id) {
+java.util.Optional<Video> por=  VideoRepository.findById(id);
 		
+		if (por.isPresent()){
+		VideoRepository.deleteById(id);
+		//porRep.delete(por.get());
+			
+			
+			return por.get();
+		}
+		return null;
 	}
 
 	@Override

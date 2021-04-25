@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.example.video.model.Komentar;
 import com.example.video.model.LikeDislike;
 import com.example.video.repository.LikeDislikeRepository;
 import com.example.video.service.LikeDislikeService;
@@ -29,9 +30,17 @@ public class JpaLikeDislikeService implements LikeDislikeService{
 	}
 
 	@Override
-	public void delete(Long id) {
-		likeDislikeRep.deleteById(id);
+	public LikeDislike delete(Long id) {
+java.util.Optional<LikeDislike> like  =  likeDislikeRep.findById(id);
 		
+		if (like.isPresent()){
+			likeDislikeRep.deleteById(id);
+		
+			
+			
+			return like.get();
+		}
+		return null;
 	}
 
 	@Override

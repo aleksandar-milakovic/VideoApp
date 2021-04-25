@@ -6,6 +6,7 @@ import java.time.format.DateTimeParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
 import com.example.video.model.LikeDislike;
 import com.example.video.model.Video;
@@ -13,7 +14,7 @@ import com.example.video.service.KomentarService;
 import com.example.video.service.LikeDislikeService;
 import com.example.video.service.VideoService;
 import com.example.video.web.dto.LikeDislikeDTO;
-
+@Component
 public class LikeDislikeDTOtoLikeDislike implements Converter<LikeDislikeDTO, LikeDislike> {
 
 	@Autowired

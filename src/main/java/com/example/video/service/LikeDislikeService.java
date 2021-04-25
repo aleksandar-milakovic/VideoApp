@@ -12,7 +12,7 @@ public interface LikeDislikeService {
 
 	 LikeDislike save(LikeDislike likeDislike);
 
-	 void delete(Long id);
+	 LikeDislike delete(Long id);
 	 
 	 LikeDislike findOneId(Long id);
 

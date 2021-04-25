@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.core.convert.converter.Converter;
-
+import org.springframework.stereotype.Component;
 
 import com.example.video.model.Video;
 
 import com.example.video.web.dto.VideoDTO;
-
+@Component
 public class VideotoVideoDTO implements Converter<Video, VideoDTO> {
 
 		@Override
