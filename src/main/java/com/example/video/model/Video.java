@@ -35,8 +35,8 @@ public class Video {
 	 	@Column 
 	 	private String opis;
 	 	
-	 	 @Enumerated(EnumType.STRING)
-	     private Vidljivost vidljivost;
+	 	 //@Enumerated(EnumType.STRING)
+	     private String vidljivost;
 	 	 
 	 	 
 	 	 @Column
@@ -102,11 +102,11 @@ public class Video {
 			this.opis = opis;
 		}
 
-		public Vidljivost getVidljivost() {
+		public String getVidljivost() {
 			return vidljivost;
 		}
 
-		public void setVidljivost(Vidljivost vidljivost) {
+		public void setVidljivost(String vidljivost) {
 			this.vidljivost = vidljivost;
 		}
 

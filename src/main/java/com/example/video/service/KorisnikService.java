@@ -5,6 +5,7 @@ package com.example.video.service;
 
 import org.springframework.data.domain.Page;
 
+import com.example.video.enumeration.KorisnickaUloga;
 import com.example.video.model.Korisnik;
 import com.example.video.web.dto.KorisnikPromenaLozinkeDto;
 
@@ -29,6 +30,6 @@ public interface KorisnikService {
     
     Korisnik findOneId(Long id);
 
-    Page<Korisnik> find(String eMail,String ime,String korIme,String prezime,String uloga,int pageNo );
+    Page<Korisnik> find(String eMail,String ime,String korIme,String prezime,KorisnickaUloga uloga,int pageNo );
     
 }

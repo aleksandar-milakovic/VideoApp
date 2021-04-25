@@ -21,7 +21,7 @@ public class KorisnikDTO {
     //@Size(min=3, max=50)
     private String prezime;
 
-    
+    private String datumKreiranja;
     public Long getId() {
         return id;
     }
@@ -61,6 +61,14 @@ public class KorisnikDTO {
     public void setPrezime(String prezime) {
         this.prezime = prezime;
     }
+
+	public String getDatumKreiranja() {
+		return datumKreiranja;
+	}
+
+	public void setDatumKreiranja(String datumKreiranja) {
+		this.datumKreiranja = datumKreiranja;
+	}
 
    
 }

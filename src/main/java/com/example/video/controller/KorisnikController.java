@@ -19,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.video.enumeration.KorisnickaUloga;
 import com.example.video.model.Korisnik;
 import com.example.video.security.TokenUtils;
 import com.example.video.service.KorisnikService;
@@ -36,6 +37,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -123,9 +125,20 @@ public class KorisnikController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
-    public ResponseEntity<List<KorisnikDTO>> get(@RequestParam(defaultValue="0") int page){
-        Page<Korisnik> korisnici = korisnikService.findAll(page);
-        return new ResponseEntity<>(toKorisnikDto.convert(korisnici.getContent()), HttpStatus.OK);
+    public ResponseEntity<List<KorisnikDTO>> get(
+    		@RequestParam(required = false ,defaultValue = "") String eMail,
+    		@RequestParam(required = false, defaultValue = "") String ime,
+    		@RequestParam(required = false, defaultValue = "") String korisnickoIme,
+    		@RequestParam(required = false, defaultValue = "") String prezime,
+    		@RequestParam(required = false ) KorisnickaUloga uloga,
+    		
+    		@RequestParam(defaultValue="0") int page) {
+        Page<Korisnik> korisnici = korisnikService.find(eMail, ime, korisnickoIme, prezime,uloga, page);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Total-Pages", Integer.toString(korisnici.getTotalPages()));
+
+        
+        return new ResponseEntity<>(toKorisnikDto.convert(korisnici.getContent()),headers, HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_KORISNIK')")

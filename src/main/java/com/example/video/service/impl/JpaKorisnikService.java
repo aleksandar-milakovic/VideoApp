@@ -92,8 +92,8 @@ public class JpaKorisnikService implements KorisnikService {
 	}
 
 	@Override
-	public Page<Korisnik> find(String eMail, String ime, String korIme, String prezime, String uloga, int pageNo) {
+	public Page<Korisnik> find(String eMail, String ime, String korIme, String prezime,KorisnickaUloga uloga, int pageNo) {
 		
-		return korisnikRepository.search(eMail, ime, korIme, prezime, uloga, PageRequest.of(pageNo, 3));
+		return korisnikRepository.search(eMail, ime, korIme, prezime, uloga,PageRequest.of(pageNo, 3));
 	}
 }

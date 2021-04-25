@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.example.video.enumeration.KorisnickaUloga;
 import com.example.video.model.Korisnik;
 
 
@@ -25,10 +26,10 @@ public interface KorisnikRepository extends JpaRepository<Korisnik, Long> {
             "(k.ime LIKE %:ime%) AND "+
             "( k.korisnickoIme LIKE %:korisnickoIme%) AND " +
             "(k.prezime LIKE %:prezime%) AND " +
-            "(:uloga = NULL OR k.uloga = :uloga)")
+            "(:uloga = NULL OR k.uloga LIKE :uloga)")
     Page<Korisnik> search(@Param("eMail")String eMail, @Param("ime") String ime,
                             @Param("korisnickoIme") String korisnickoIme, @Param("prezime") String prezime,
-                            @Param("uloga") String uloga,Pageable pageable);
+                            @Param("uloga") KorisnickaUloga uloga,Pageable pageable);
 
     Korisnik findOneById(Long id);
 
