@@ -26,7 +26,8 @@ public class VideotoVideoDTO implements Converter<Video, VideoDTO> {
 	        videoDTO.setVideo(video.getVideo());
 	        videoDTO.setVidljivost(video.getVidljivost());
 	        videoDTO.setVidljivostRejtinga(video.getVidljivostRejtinga());
-	        
+	        videoDTO.setImeVlasnika(video.getVlasnik().getIme());
+	        videoDTO.setPrezimeVlasnika(video.getVlasnik().getPrezime());
 
 	        return videoDTO;
 	    }

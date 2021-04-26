@@ -42,7 +42,7 @@ public class VideoDTOtoVideo implements org.springframework.core.convert.convert
 			video.setVidljivost(source.getVidljivost());
 			video.setVidljivostRejtinga(source.getVidljivostRejtinga());
 			video.setVlasnik(korisnikService.findOneId(source.getKorisnikId()));
-			
+			;
 		}
 		return video;
 	}

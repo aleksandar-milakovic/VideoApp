@@ -74,8 +74,8 @@ public class KorisnikController {
     @PreAuthorize("permitAll()")
     @PostMapping
     public ResponseEntity<KorisnikDTO> create(@RequestBody @Validated KorisnikRegistracijaDTO dto){
-
-        if(dto.getId() != null || !dto.getLozinka().equals(dto.getPonovljenaLozinka())) {
+    		System.out.println(dto.getLozinka()+"  "+dto.getPonovljenaLozinka());
+        if(!dto.getLozinka().equals(dto.getPonovljenaLozinka())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

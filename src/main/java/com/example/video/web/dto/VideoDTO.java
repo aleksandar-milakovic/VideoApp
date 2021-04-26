@@ -26,6 +26,10 @@ public class VideoDTO {
 	
 	private String datumKreiranja;
 	
+	private String imeVlasnika;
+	
+	private String prezimeVlasnika;
+	
 	private Long korisnikId;
 
 	public Long getId() {
@@ -110,6 +114,22 @@ public class VideoDTO {
 
 	public VideoDTO() {
 		super();
+	}
+
+	public String getImeVlasnika() {
+		return imeVlasnika;
+	}
+
+	public void setImeVlasnika(String imeVlasnika) {
+		this.imeVlasnika = imeVlasnika;
+	}
+
+	public String getPrezimeVlasnika() {
+		return prezimeVlasnika;
+	}
+
+	public void setPrezimeVlasnika(String prezimeVlasnika) {
+		this.prezimeVlasnika = prezimeVlasnika;
 	}
 	
 	

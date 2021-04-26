@@ -103,10 +103,11 @@ public class VideoController {
     		@RequestParam(required = false) Integer brojPregledaOd,
     		@RequestParam(required = false) Integer brojPregledaDo,
     		@RequestParam(required = false, defaultValue = "") String opis,
+    		 @RequestParam(value = "totalPages", defaultValue = "0") int totalPages,
     		@RequestParam(required = false ) Long vlasnikId,
 
     		
-    		@RequestParam(defaultValue="0") int page) {
+    		@RequestParam(value="pageNo",defaultValue="0") int pageNo) {
     		
 
 		Page<Video> videos = null;
@@ -118,9 +119,9 @@ public class VideoController {
     		LocalDate datumIVremeDo = getLocalDate(datumIVremeDoParametar);
         
     	
-    		 videos = videoService.find(datumIVremeOd, datumIVremeDo, brojPregledaOd, brojPregledaDo, opis, vlasnikId, page);}
+    		 videos = videoService.find(datumIVremeOd, datumIVremeDo, brojPregledaOd, brojPregledaDo, opis, vlasnikId, pageNo);}
     		catch (Exception e) {
-				videos = videoService.findAll(page);
+				videos = videoService.findAll(pageNo);
 			}
         HttpHeaders headers = new HttpHeaders();
         headers.add("Total-Pages", Integer.toString(videos.getTotalPages()));
