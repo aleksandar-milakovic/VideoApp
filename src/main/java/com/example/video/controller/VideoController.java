@@ -36,6 +36,7 @@ import com.example.video.support.VideotoVideoDTO;
 import com.example.video.web.dto.AuthKorisnikDto;
 
 import com.example.video.web.dto.VideoDTO;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 @RestController
 @RequestMapping(value = "/api/videos", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -94,8 +95,7 @@ public class VideoController {
     }
 
 
-    @PreAuthorize("hasAnyRole('ROLE_KORISNIK', 'ROLE_ADMIN')")
-
+    @PreAuthorize("permitAll()")
     @GetMapping
     public ResponseEntity<List<VideoDTO>> get(
     		@RequestParam(required = false ) String datumIVremeOdParametar,
@@ -113,6 +113,12 @@ public class VideoController {
 		Page<Video> videos = null;
     		
     		try {
+    			if(datumIVremeOdParametar==null) {
+    				datumIVremeOdParametar="1990-01-01";
+    			}
+    			if(datumIVremeDoParametar==null) {
+    				datumIVremeDoParametar= LocalDate.now().toString(); 
+    			}
     		LocalDate datumIVremeOd = getLocalDate(datumIVremeOdParametar);
     
     		

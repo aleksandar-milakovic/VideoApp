@@ -29,5 +29,7 @@ export const login = async function(username, password){
 
 export const logout = function(){
     window.localStorage.removeItem('jwt');
+    window.localStorage.removeItem('role');
+    window.localStorage.clear()
     window.location.reload();
 }

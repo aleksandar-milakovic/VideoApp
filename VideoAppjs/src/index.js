@@ -42,8 +42,8 @@ class App extends React.Component {
               { jwt!=null ?
                 <div   style={{float:'right',paddingLeft:'1100px'}}><Nav.Link onClick={()=>logout()}>Logout</Nav.Link></div>:
                 <div    style={{float:'right',paddingLeft:'1100px'}}><Nav.Link as={Link} to="/login">Login</Nav.Link></div>}
-                <br/><div  style={{float:'right',paddingLeft:'25px'}}><Nav.Link style={{float:'right'}} as={Link} to="/register">Register</Nav.Link></div>
-              </Nav>
+               {jwt!=null ? null:<div  style={{float:'right',paddingLeft:'25px'}}><Nav.Link style={{float:'right'}} as={Link} to="/register">Register</Nav.Link></div>
+  }</Nav>
             </Navbar>
             <Container style={{paddingTop:"25px"}}>
               <Switch>
