@@ -50,7 +50,21 @@ console.log(value)
 
   this.setState({ zadatak: poruka });
 }
-
+  delete(videoId) {
+        VideoAxios.delete('/videos/' + videoId)
+        .then(res => {
+            // handle success
+            console.log(res);
+            alert('Movie was deleted successfully!');
+           // this.deleteFromState(takmicenjeId); // ili refresh page-a window.location.reload();
+           this.props.history.push("/videos")
+        })
+        .catch(error => {
+            // handle error
+            console.log(error);
+            alert('Error occured please try again!');
+         });
+    }
  
 
   //TODO prokomentarisati sto sam promenio da se radi sa pageNo, a ne changeDir!!
@@ -376,7 +390,8 @@ sort7(){
               {this.state.videos.map((video) => {
                 return (
                   <tr key={video.id}>
-                         {(window.localStorage['role']=="ROLE_KORISNIK"||window.localStorage['role']==null) && video.vidljivost=="PRIVATNI"?
+                         {(window.localStorage['role']=="ROLE_KORISNIK"
+                         ||window.localStorage['role']==null) && video.vidljivost=="PRIVATNI"?
                 
                    null:  <div class="card mb-4 box-shadow" style={{marginTop:'auto',marginLeft:'auto',marginRight:'auto'}}>
                    <thead><a href={video.video}><Image  src={video.slicica} style={{height:'200px',width:'200px'}}></Image></a></thead>

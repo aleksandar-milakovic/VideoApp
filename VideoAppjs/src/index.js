@@ -11,6 +11,7 @@ import {logout} from './services/auth';
 import Register from './components/Register.js';
 import Videos from "./components/Video/Videos";
 import Video from "./components/Video/Video";
+import VideoEdit from "./components/Video/VideoEdit";
 
 class App extends React.Component {
   constructor(){
@@ -53,6 +54,7 @@ class App extends React.Component {
                <Route exact path="/register" component={Register}/>
                <Route exact path="/videos" component={Videos} />
                <Route exact path="/video/:id" component={Video} />
+               <Route exact path="/videoEdit/:id" component={VideoEdit} />
                
                 <Route component={NotFound} />
               </Switch>

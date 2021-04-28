@@ -179,7 +179,7 @@ public class VideoController {
         return new ResponseEntity<>(toVideoDto.convert(videos.getContent()),headers, HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
-	  @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_KORISNIK', 'ROLE_ADMIN')")
 	public ResponseEntity<Void> delete(@PathVariable Long id){
 	  
 		

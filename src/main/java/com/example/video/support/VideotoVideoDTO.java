@@ -30,7 +30,7 @@ public class VideotoVideoDTO implements Converter<Video, VideoDTO> {
 	        videoDTO.setSlicica(video.getSlicica());
 	        videoDTO.setVideo(video.getVideo());
 	        videoDTO.setVidljivost(video.getVidljivost());
-	        videoDTO.setVidljivostRejtinga(video.getVidljivostRejtinga());
+	         videoDTO.setVidljivostRejtinga(video.getVidljivostRejtinga());
 	        videoDTO.setImeVlasnika(video.getVlasnik().getIme());
 	        videoDTO.setPrezimeVlasnika(video.getVlasnik().getPrezime());
 	        videoDTO.setBlokiran(video.getBlokiran());
@@ -40,7 +40,7 @@ public class VideotoVideoDTO implements Converter<Video, VideoDTO> {
 			if(ld.getIsitLike()==true) {
 				like++;
 			}
-		}
+		} 
 	        for (LikeDislike ld : video.getLajkovi()) {
 				if(ld.getIsitLike()==false) {
 					dislike++;

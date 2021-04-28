@@ -20,6 +20,8 @@ class Video extends React.Component {
           brojLajkova:"",
           brojDislajkova:"",
           idpratioca:[],
+          korisnikId:"",
+          
       }
       let flag = false
       this.state = { 
@@ -27,6 +29,7 @@ class Video extends React.Component {
         video:video,
         idpratioca:[],
         flag:true,
+        flag2:true,
         // stanja:[],
         // sprintovi:[]
         // search: search
@@ -51,8 +54,10 @@ class Video extends React.Component {
             console.log(window.localStorage['id']);
             let ulogovani = window.localStorage['id'];
             let a= this.state.idpratioca.toString()
-            console.log("jedan " + a.includes(ulogovani));
-            this.setState({flag:a.includes(ulogovani)})
+            let b= this.state.video.id
+            console.log(b);
+            
+            this.setState({flag:(a.includes(ulogovani)),flag2:(this.state.video.korisnikId!=window.localStorage['id'])})
        })
         .catch(error => {
             // handle error
@@ -90,36 +95,9 @@ class Video extends React.Component {
          console.log(this.state.idpratioca)
     }
 
-    // TODO: Dobaviti filmove
-    // async getZgrade(){
-    //     try {
-    //       let result = await CinemaAxios.get("/sprintovi");
-    //       if (result && result.status === 200){
-    //         this.setState({
-    //           sprintovi: result.data
-    //           });
-    //           console.log(result.data)
-    //       }
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   }
-    //   async getZgrade1(){
-    //     try {
-    //       let result = await CinemaAxios.get("/stanja");
-    //       if (result && result.status === 200){
-    //         this.setState({
-    //           stanja: result.data
-    //           });
-    //           console.log(result.data)
-    //       }
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   }
 
-      async subscribe(e){
-        e.preventDefault();
+async subscribe(e){
+  e.preventDefault();
       
      
         try{
@@ -157,22 +135,25 @@ window.location.reload()
 alert("Couldn't save the linija");
 }
 }
-    valueInputChanged(e) {
-        let input = e.target;
-      
-        let name = input.name;
-        let value = input.value;
-      console.log(value)
-        let poruka = this.state.zadatak;
-        poruka[name] = value;
-      
-        this.setState({ zadatak: poruka });
-      }
-      
+goToEdit(id) {
+  this.props.history.push("/videoEdit/"+id);
 
-    // TODO: Rukovati prihvatom vrednosti na promenu
-   
-    // TODO: Omogućiti odabir filma za projekciju
+}
+delete(videoId) {
+  VideoAxios.delete('/videos/' + videoId)
+  .then(res => {
+      // handle success
+      console.log(res);
+      alert('Video was deleted successfully!');
+     // this.deleteFromState(takmicenjeId); // ili refresh page-a window.location.reload();
+     this.props.history.push("/videos")
+  })
+  .catch(error => {
+      // handle error
+      console.log(error);
+      alert('Error occured please try again!');
+   });
+}
     render(){
         return (
             <>
@@ -218,8 +199,8 @@ alert("Couldn't save the linija");
                               
             this.state.flag== true ?
             [
-            <td><Button onClick={(event)=>{this.unsubscribe(event);}} >UNSUBSCRIBE</Button></td>]
-            :<Button style={{visibility:this.state.flag==false ? 'visible':'hidden'}} onClick={(event)=>{this.subscribe(event);}}>SUBSCRIBE</Button> }
+            <td><Button style={{visibility:this.state.flag2==false ? 'hidden':'visible'}}   onClick={(event)=>{this.unsubscribe(event);}} >UNSUBSCRIBE</Button></td>]
+            :<Button style={{visibility:this.state.flag2==false ? 'hidden':'visible'}} onClick={(event)=>{this.subscribe(event);}}>SUBSCRIBE</Button> }
         
                      
                         
@@ -272,8 +253,12 @@ alert("Couldn't save the linija");
           </Col>
           </Row>
           
+          {window.localStorage['role']=='ADMIN' ||window.localStorage['id']==this.state.video.korisnikId ?
+                  [
+                  <td><Button variant="danger" onClick={() => this.delete(this.state.video.id)}>Delete</Button>
+                  <Button onClick={(event)=>{this.goToEdit(this.state.video.id);}}>Edit</Button></td>]
+                  :null}
          
-          <Button onClick={(event)=>{this.create(event);}}>Edit</Button>
 
 
         </Form>
