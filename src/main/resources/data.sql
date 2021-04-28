@@ -9,7 +9,7 @@ INSERT INTO korisnik (id, e_mail, korisnicko_ime, lozinka, ime, prezime, uloga,o
               
 INSERT INTO korisnik (id, e_mail, korisnicko_ime, lozinka, ime, prezime, uloga,opis_kanala,blokiran,datum_reg )
               VALUES (4,'ana@maildrop.cc','ana','$2y$12$mvzvppYcGtzwOZPrM73LJOrEZwOyauiWEqguIPAeq/YE33lukC9J.','Ana','Nikolasevic','KORISNIK','kanal o putovanjima',false,'2020-04-03');              
-
+  
                
 
   

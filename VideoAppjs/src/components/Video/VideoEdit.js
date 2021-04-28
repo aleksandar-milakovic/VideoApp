@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Row, Col, Button,Image, Table} from 'react-bootstrap';
 import VideoAxios from '../../apis/VideoAxios';
+import Video from './Video';
 
 class VideoEdit extends React.Component {
 
@@ -22,7 +23,8 @@ class VideoEdit extends React.Component {
           korisnikId:"",
           video:"",
           slicica:"",
-          datumKreiranja:""
+          datumKreiranja:"",
+          brojPregleda:"",
        
           
       }
@@ -89,11 +91,13 @@ class VideoEdit extends React.Component {
                   video:video.video,
                   slicica:video.slicica,
                   datumKreiranja:video.datumKreiranja,
-                  korisnikId:video.korisnikId
+                  korisnikId:video.korisnikId,
+                  blokiran:video.blokiran,
+                  brojPregleda:video.brojPregleda
                   
               }
     
-        let response = await VideoAxios.put("/videos/" +this.state.video.id, videoDTO);
+        let response = await VideoAxios.put("/videos/" +video.id, videoDTO);
                 console.log(videoDTO)
         this.props.history.push("/video/"+this.state.video.id);
     }catch(error){
@@ -143,7 +147,8 @@ valueInputChanged(e) {
           <Form.Group>
             <Form.Label>Vidljivost rejtinga</Form.Label>
             <Form.Control
-             value={this.state.video.vidljivostRejtinga}
+              onChange={(e) => this.valueInputChanged(e)}
+            value={this.state.video.vidljivostRejtinga}
               name="vidljivostRejtinga"
               as="select">
               <option value={-1}></option>
@@ -157,7 +162,7 @@ valueInputChanged(e) {
               </option>
               
 
-              onChange={(e) => this.valueInputChanged(e)}
+            
             </Form.Control>
           </Form.Group>
          
@@ -193,7 +198,8 @@ valueInputChanged(e) {
           <Form.Group>
             <Form.Label>Dozvoljeni komentari</Form.Label>
             <Form.Control
-             value={this.state.video.dozvoljeniKomentari}
+              onChange={(e) => this.valueInputChanged(e)}
+           value={this.state.video.dozvoljeniKomentari}
               name="dozvoljeniKomentari"
               as="select">
               <option value={-1}></option>
@@ -207,9 +213,31 @@ valueInputChanged(e) {
               </option>
               
 
-              onChange={(e) => this.valueInputChanged(e)}
+          
             </Form.Control>
           </Form.Group>
+          {window.localStorage['role']=='ROLE_ADMIN'?
+          <Form.Group>
+            <Form.Label>Blokiran</Form.Label>
+            <Form.Control
+              onChange={(e) => this.valueInputChanged(e)}
+            value={this.state.video.blokiran}
+              name="blokiran"
+              as="select">
+              <option value={-1}></option>
+              
+                 
+              <option value={true} >
+               DA
+              </option>
+              <option value={false} >
+               NE
+              </option>
+              
+
+          
+            </Form.Control>
+          </Form.Group>:null}
          
           </Col>
           </Row>

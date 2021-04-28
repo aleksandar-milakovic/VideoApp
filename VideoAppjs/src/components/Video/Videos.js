@@ -116,7 +116,7 @@ console.log(value)
 
           this.state.videos.sort((a,b) => b.brojPregleda-a.brojPregleda
           ); 
-          console.log(this.state.videos);
+          console.log(result.data);
       }
     } catch (error) {
       console.log(error);

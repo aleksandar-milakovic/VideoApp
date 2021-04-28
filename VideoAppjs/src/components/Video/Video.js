@@ -22,7 +22,7 @@ class Video extends React.Component {
           idpratioca:[],
           korisnikId:"",
           vidljivost:"",
-          
+          blokiran:""
       }
       let flag = false
       this.state = { 
@@ -57,7 +57,7 @@ class Video extends React.Component {
             let a= this.state.idpratioca.toString()
             let b= this.state.video.id
             console.log(b);
-            
+            console.log(this.state.video.blokiran+"sasas")
             this.setState({flag:(a.includes(ulogovani)),flag2:(this.state.video.korisnikId!=window.localStorage['id'])})
        })
         .catch(error => {
@@ -187,7 +187,9 @@ sort4(){
             this.props.history.push("/video/"+id);
           }
     render(){
-          if(this.state.video.vidljivost=='PRIVATNI'&& this.state.video.korisnikId!=window.localStorage['id']){
+          if((window.localStorage['role']=="ROLE_KORISNIK" && window.localStorage['id']!=this.state.video.korisnikId)
+          ||window.localStorage['role']==null &&(this.state.video.vidljivost=='PRIVATNI'||this.state.video.blokiran==true)
+        ){
 
              return (
                   <div><h1>You are not authorized for this video</h1>
@@ -301,7 +303,7 @@ sort4(){
           </Col>
           </Row>
           
-          {window.localStorage['role']=='ADMIN' ||window.localStorage['id']==this.state.video.korisnikId ?
+          {window.localStorage['role']=='ROLE_ADMIN' ||window.localStorage['id']==this.state.video.korisnikId ?
                   [
                   <td><Button variant="danger" onClick={() => this.delete(this.state.video.id)}>Delete</Button>
                   <Button onClick={(event)=>{this.goToEdit(this.state.video.id);}}>Edit</Button></td>]
