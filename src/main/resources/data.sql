@@ -42,12 +42,20 @@ VALUES (7,'https://www.youtube.com/watch?v=U86Qy6-3UMk&ab_channel=KAMBERizam','h
 INSERT INTO komentar (id,sadrzaj,datum_kreiranja,vlasnik_id,video_id) 
 VALUES (1,'SADRZAJ 1','2020-04-20',1,1);
 INSERT INTO komentar (id,sadrzaj,datum_kreiranja,vlasnik_id,video_id) 
-VALUES (2,'SADRZAJ 2','2020-04-21',2,5);
+VALUES (2,'SADRZAJ 2','2020-03-21',1,1);
+INSERT INTO komentar (id,sadrzaj,datum_kreiranja,vlasnik_id,video_id) 
+VALUES (3,'SADRZAJ 2','2020-04-21',2,5);
 
 
 INSERT INTO like_dislike (id,isit_like,datum_kreiranja,video_id)
 VALUES(1,true,'2020-04-22',6);
+INSERT INTO like_dislike (id,isit_like,datum_kreiranja,video_id)
+VALUES(2,true,'2020-04-22',1);
 INSERT INTO like_dislike (id,isit_like,datum_kreiranja,komentar_id)
-VALUES(2,true,'2020-04-23',2);
+VALUES(3,true,'2020-04-22',1);
+INSERT INTO like_dislike (id,isit_like,datum_kreiranja,komentar_id)
+VALUES(4,true,'2020-04-22',2);
+INSERT INTO like_dislike (id,isit_like,datum_kreiranja,komentar_id)
+VALUES(5,true,'2020-04-23',2);
 
 

@@ -21,6 +21,7 @@ class Video extends React.Component {
           brojDislajkova:"",
           idpratioca:[],
           korisnikId:"",
+          vidljivost:"",
           
       }
       let flag = false
@@ -46,7 +47,7 @@ class Video extends React.Component {
         VideoAxios.get('/videos/' + this.props.match.params.id)
         .then(res => {
             // handle success
-            console.log(res.data.idpratioca);
+            console.log(res.data);
            /* if(res.data.idpratioca.length==0){
                 res.data.idpratioca.push(0)
             }*/
@@ -153,10 +154,52 @@ delete(videoId) {
       console.log(error);
       alert('Error occured please try again!');
    });
+} 
+sort1(){
+  this.state.komentari.sort((a,b) => (a.brojLajkova-a.brojDislajkova)-(b.brojLajkova-b.brojDislajkova));
+  this.setState({
+
+    komentari: this.state.komentari
+    });
+  }
+  sort2(){
+    this.state.komentari.sort((a,b) => (b.brojLajkova-b.brojDislajkova)-(a.brojLajkova-a.brojDislajkova));
+    this.setState({
+
+        komentari: this.state.komentari
+        });    
 }
+sort3(){
+    this.state.komentari.sort((a,b) => Date.parse(b.datumKreiranja)-Date.parse(a.datumKreiranja));
+    this.setState({
+
+        komentari: this.state.komentari
+        });    
+}
+sort4(){
+    this.state.komentari.sort((a,b) => Date.parse(a.datumKreiranja)-Date.parse(b.datumKreiranja));
+    this.setState({
+
+        komentari: this.state.komentari
+        });    
+    }
+        goToVideo(id) {
+            this.props.history.push("/video/"+id);
+          }
     render(){
+          if(this.state.video.vidljivost=='PRIVATNI'&& this.state.video.korisnikId!=window.localStorage['id']){
+
+             return (
+                  <div><h1>You are not authorized for this video</h1>
+                  <Button onClick={(event)=>{this.props.history.push("/videos");}}>Go to main page</Button></div>
+             );
+         
+           // alert("Niste autorizovani za pristup zeljenom videu")
+          }
+          else {
         return (
             <>
+            
              <h1>Video </h1>
         
              <Form style={{marginTop:35}}>
@@ -238,7 +281,12 @@ delete(videoId) {
                 );
               })}
             </tbody>
+            
           </Table>
+          <Button onClick={()=>this.sort1()}>sort by date DESC</Button><br/>
+              <Button onClick={()=>this.sort2()}>sort by date ASC</Button>
+             <Button onClick={()=>this.sort3()}>sort by likes ASC</Button><br/>
+             <Button onClick={()=>this.sort4()}>sort by likes DESC</Button>
             </div>
           
           
@@ -265,7 +313,7 @@ delete(videoId) {
               
             </>
         )
-    }
+    }}
 }
 
 export default Video;

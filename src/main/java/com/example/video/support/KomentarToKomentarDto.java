@@ -39,7 +39,7 @@ public class KomentarToKomentarDto implements Converter<Komentar, KomentarDTO> {
 	        komDto.setBrojLajkova(like);
 	        komDto.setBrojDislajkova(dislike);
 	        komDto.setImeVlasnika(source.getVlasnik().getIme());
-	     
+	       komDto.setPrezimeVlasnika(source.getVlasnik().getPrezime());
 	        
 		return komDto;
 	}

@@ -84,7 +84,7 @@ public class VideoController {
         return new ResponseEntity<>(toVideoDto.convert(videoService.save(video)),HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_KORISNIK', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_KORISNIK', 'ROLE_ADMIN','ID')")
     @GetMapping("/{id}")
     public ResponseEntity<VideoDTO> get(@PathVariable Long id){
         Video video = videoService.findOneId(id);
