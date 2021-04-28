@@ -382,7 +382,7 @@ sort7(){
                    <thead><a href={video.video}><Image  src={video.slicica} style={{height:'200px',width:'200px'}}></Image></a></thead>
                      <div class="card-body" style={{backgroundColor:'floralwhite'}}>
                    <tbody>
-                    <tr onClick={() => this.goToVideo(video.id)}>Naziv: <Button style={{backgroundColor:'red'}}>{ video.opis+" "}</Button></tr>
+                    <tr onClick={() => this.goToVideo(video.id)}>{"Naziv: "+ video.opis+" "}</tr>
                    <tr>{"Otpremio " +video.imeVlasnika+" "+video.prezimeVlasnika}</tr>
                
                    <tr>{"Kreirano "+ video.datumKreiranja}</tr>

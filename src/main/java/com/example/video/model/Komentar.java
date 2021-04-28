@@ -1,13 +1,18 @@
 package com.example.video.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 @Entity
 public class Komentar {
 
@@ -26,6 +31,10 @@ public class Komentar {
 	
 	@ManyToOne
 	private Video video;
+	
+	
+	@OneToMany(mappedBy = "komentar", fetch = FetchType.LAZY, cascade =CascadeType.ALL)
+	 private List<LikeDislike> lajkovi = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -65,6 +74,14 @@ public class Komentar {
 
 	public void setVideo(Video video) {
 		this.video = video;
+	}
+
+	public List<LikeDislike> getLajkovi() {
+		return lajkovi;
+	}
+
+	public void setLajkovi(List<LikeDislike> lajkovi) {
+		this.lajkovi = lajkovi;
 	}
 	
 	

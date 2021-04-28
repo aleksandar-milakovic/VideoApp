@@ -7,6 +7,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import com.example.video.model.Komentar;
+import com.example.video.model.LikeDislike;
 import com.example.video.model.Video;
 import com.example.video.web.dto.KomentarDTO;
 import com.example.video.web.dto.VideoDTO;
@@ -22,6 +23,24 @@ public class KomentarToKomentarDto implements Converter<Komentar, KomentarDTO> {
 		komDto.setVideoId(source.getVideo().getId());
 		komDto.setVlasnikId(source.getVlasnik().getId());
 		komDto.setId(source.getId());
+		  int like= 0;
+	        int dislike=0;
+	        for (LikeDislike ld : source.getLajkovi()) {
+			if(ld.getIsitLike()==true) {
+				like++;
+			}
+		}
+	        for (LikeDislike ld : source.getLajkovi()) {
+				if(ld.getIsitLike()==false) {
+					dislike++;
+				}
+			}
+	        
+	        komDto.setBrojLajkova(like);
+	        komDto.setBrojDislajkova(dislike);
+	        komDto.setImeVlasnika(source.getVlasnik().getIme());
+	     
+	        
 		return komDto;
 	}
 	

@@ -17,7 +17,8 @@ export const login = async function(username, password){
         const ret = await VideoAxios.post('korisnici/auth', cred);
         const decoded = jwt_decode(ret.data)
         console.log(decoded)
-        window.localStorage.setItem('role', decoded.role.authority)
+        window.localStorage.setItem('role', decoded.id.authority)
+        window.localStorage.setItem('id', decoded.role.authority)
         window.localStorage.setItem('jwt', ret.data);
       
     window.location.replace("/")
@@ -30,6 +31,7 @@ export const login = async function(username, password){
 export const logout = function(){
     window.localStorage.removeItem('jwt');
     window.localStorage.removeItem('role');
+    window.localStorage.removeItem('id')
     window.localStorage.clear()
     window.location.reload();
 }

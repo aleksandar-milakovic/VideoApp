@@ -11,6 +11,15 @@ public class KomentarDTO {
 	private Long vlasnikId;
 	
 	private Long videoId;
+	
+	private Integer brojLajkova;
+	
+	private Integer brojDislajkova;
+	
+	
+	private String imeVlasnika;
+	
+	private String prezimeVlasnika;
 
 	public KomentarDTO() {
 		super();
@@ -56,5 +65,37 @@ public class KomentarDTO {
 		this.videoId = videoId;
 	}
 
+	public Integer getBrojLajkova() {
+		return brojLajkova;
+	}
+
+	public void setBrojLajkova(Integer brojLajkova) {
+		this.brojLajkova = brojLajkova;
+	}
+
+	public Integer getBrojDislajkova() {
+		return brojDislajkova;
+	}
+
+	public void setBrojDislajkova(Integer brojDislajkova) {
+		this.brojDislajkova = brojDislajkova;
+	}
+
+	public String getImeVlasnika() {
+		return imeVlasnika;
+	}
+
+	public void setImeVlasnika(String imeVlasnika) {
+		this.imeVlasnika = imeVlasnika;
+	}
+
+	public String getPrezimeVlasnika() {
+		return prezimeVlasnika;
+	}
+
+	public void setPrezimeVlasnika(String prezimeVlasnika) {
+		this.prezimeVlasnika = prezimeVlasnika;
+	}
+	
 	
 }

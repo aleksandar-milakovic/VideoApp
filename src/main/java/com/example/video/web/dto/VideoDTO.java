@@ -1,6 +1,10 @@
 package com.example.video.web.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.video.enumeration.Vidljivost;
+import com.example.video.model.Komentar;
 import com.sun.istack.NotNull;
 
 public class VideoDTO {
@@ -22,6 +26,12 @@ public class VideoDTO {
 	
 	private Boolean vidljivostRejtinga;
 	
+	private Boolean blokiran;
+	
+	private Integer brojLajkova;
+	
+	private Integer brojDislajkova;
+	
 	private Integer brojPregleda;
 	
 	private String datumKreiranja;
@@ -30,7 +40,12 @@ public class VideoDTO {
 	
 	private String prezimeVlasnika;
 	
+	
+	private List<Long> idpratioca = new ArrayList<>();
+	
 	private Long korisnikId;
+	
+	private List<KomentarDTO> komentari= new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -130,6 +145,46 @@ public class VideoDTO {
 
 	public void setPrezimeVlasnika(String prezimeVlasnika) {
 		this.prezimeVlasnika = prezimeVlasnika;
+	}
+
+	public Boolean getBlokiran() {
+		return blokiran;
+	}
+
+	public void setBlokiran(Boolean blokiran) {
+		this.blokiran = blokiran;
+	}
+
+	public Integer getBrojLajkova() {
+		return brojLajkova;
+	}
+
+	public void setBrojLajkova(Integer brojLajkova) {
+		this.brojLajkova = brojLajkova;
+	}
+
+	public Integer getBrojDislajkova() {
+		return brojDislajkova;
+	}
+
+	public void setBrojDislajkova(Integer brojDislajkova) {
+		this.brojDislajkova = brojDislajkova;
+	}
+
+	public List<KomentarDTO> getKomentari() {
+		return komentari;
+	}
+
+	public void setKomentari(List<KomentarDTO> komentari) {
+		this.komentari = komentari;
+	}
+
+	public List<Long> getIdpratioca() {
+		return idpratioca;
+	}
+
+	public void setIdpratioca(List<Long> idpratioca) {
+		this.idpratioca = idpratioca;
 	}
 	
 	

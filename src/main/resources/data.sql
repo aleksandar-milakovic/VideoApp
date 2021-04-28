@@ -10,11 +10,13 @@ INSERT INTO korisnik (id, e_mail, korisnicko_ime, lozinka, ime, prezime, uloga,o
 INSERT INTO korisnik (id, e_mail, korisnicko_ime, lozinka, ime, prezime, uloga,opis_kanala,blokiran,datum_reg )
               VALUES (4,'ana@maildrop.cc','ana','$2y$12$mvzvppYcGtzwOZPrM73LJOrEZwOyauiWEqguIPAeq/YE33lukC9J.','Ana','Nikolasevic','KORISNIK','kanal o putovanjima',false,'2020-04-03');              
 
-              
+               
 
-INSERT INTO korisnik_pratioci (korisnik_id,pratilac_id) VALUES (2,4);
-INSERT INTO korisnik_pratioci (korisnik_id,pratilac_id) VALUES (3,2);
-INSERT INTO korisnik_pratioci (korisnik_id,pratilac_id) VALUES (4,2);
+  
+INSERT INTO korisnik_pratioci (korisnik_id,pratilac_id) VALUES (3,2);   
+INSERT INTO korisnik_pratioci (korisnik_id,pratilac_id) VALUES (4,2);  
+INSERT INTO korisnik_pratioci (korisnik_id,pratilac_id) VALUES (3,4);
+
 
 INSERT INTO video (id,video,slicica,opis,vidljivost,vidljivost_rejtinga,dozvoljeni_komentari,blokiran,broj_pregleda,datum_kreiranja, vlasnik_id)
 VALUES (1,'https://www.youtube.com/watch?v=mTOoLCtrjkc&t=638s&ab_channel=SatnaRuci','http://i3.ytimg.com/vi/mTOoLCtrjkc/maxresdefault.jpg','OPIS 1','JAVNI',true,true,false,45,'2020-04-06',1);

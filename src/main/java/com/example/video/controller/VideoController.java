@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.video.model.Video;
+import com.example.video.service.KorisnikService;
 import com.example.video.service.VideoService;
 import com.example.video.support.VideoDTOtoVideo;
 import com.example.video.support.VideotoVideoDTO;
@@ -44,7 +45,9 @@ public class VideoController {
 	
 	@Autowired
     private VideoService	videoService;
-
+	
+	@Autowired
+	private KorisnikService korSer;
     @Autowired
     private VideoDTOtoVideo toVideo;
 
@@ -93,6 +96,46 @@ public class VideoController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    
+    @PreAuthorize("hasAnyRole('ROLE_KORISNIK', 'ROLE_ADMIN')")
+    @GetMapping("/subscribe/{id}")
+    public ResponseEntity<VideoDTO> subscribe(
+    		@RequestParam(required = false ) String iDpratioca,
+    		@PathVariable Long id){
+        Video video = videoService.findOneId(id);
+        	System.out.println(iDpratioca);
+        	video.getVlasnik().getPratioci().add(korSer.findOneId(Long.parseLong(iDpratioca)));
+        	
+        	videoService.save(video);
+        	
+        if(video !=null) {
+            return new ResponseEntity<>(toVideoDto.convert(video), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_KORISNIK', 'ROLE_ADMIN')")
+    @GetMapping("/unsubscribe/{id}")
+    public ResponseEntity<VideoDTO> unsubscribe(
+    		@RequestParam(required = false ) String iDpratioca,
+    		@PathVariable Long id){
+        Video video = videoService.findOneId(id);
+        	System.out.println(iDpratioca);
+        	video.getVlasnik().getPratioci().remove(korSer.findOneId(Long.parseLong(iDpratioca)));
+        	
+        	videoService.save(video);
+        	
+        if(video !=null) {
+            return new ResponseEntity<>(toVideoDto.convert(video), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    
 
 
     @PreAuthorize("permitAll()")

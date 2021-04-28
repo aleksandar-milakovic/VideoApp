@@ -60,10 +60,10 @@ public class Video {
 	 	 private Korisnik vlasnik;
 	 	 
 	 	 
-	 	 @OneToMany(mappedBy = "video", fetch = FetchType.EAGER, cascade =CascadeType.ALL)
+	 	 @OneToMany(mappedBy = "video", fetch = FetchType.LAZY, cascade =CascadeType.ALL)
 	 	 private List<LikeDislike> lajkovi = new ArrayList<>();
 	 	 
-	 	 @OneToMany(mappedBy = "video", fetch = FetchType.LAZY, cascade =CascadeType.DETACH)
+	 	 @OneToMany(mappedBy = "video", fetch = FetchType.EAGER, cascade =CascadeType.DETACH)
 	 	 private List<Komentar> komentari = new ArrayList<>();
 
 		public Video() {
