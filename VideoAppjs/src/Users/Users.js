@@ -348,7 +348,7 @@ class Users extends React.Component {
                   :null}
                     {window.localStorage['role']=="ROLE_ADMIN"?
                   [
-                  <td><Button style={{backgroundColor:"violet"}} onClick={() => this.goToEdit(korisnik.id)}>Edit</Button></td>
+                  <td><Button style={{backgroundColor:"violet"}} onClick={() => this.goToEdit(korisnik.id)}>View profile</Button></td>
                    ] :null}
                 
                 

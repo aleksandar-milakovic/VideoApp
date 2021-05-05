@@ -31,6 +31,7 @@ import com.example.video.web.dto.AuthKorisnikDto;
 import com.example.video.web.dto.KorisnikDTO;
 import com.example.video.web.dto.KorisnikPromenaLozinkeDto;
 import com.example.video.web.dto.KorisnikRegistracijaDTO;
+import com.example.video.web.dto.VideoDTO;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -205,4 +206,47 @@ public class KorisnikController {
 	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	    }
 	}
+    @PreAuthorize("hasAnyRole('ROLE_KORISNIK', 'ROLE_ADMIN')")
+    @GetMapping("/subscribe/{id}")
+    public ResponseEntity<KorisnikDTO> subscribe(
+    		@RequestParam(required = false ) String iDpratioca,
+    		@PathVariable Long id){
+        Korisnik korisnik = korisnikService.findOneId(id);
+        	System.out.println(iDpratioca);
+        	korisnik.getPratioci().add(korisnikService.findOneId(Long.parseLong(iDpratioca)));
+        	//video.getVlasnik().getPratioci2().add(video.getVlasnik());
+        	Korisnik k2= korisnikService.findOneId(Long.parseLong(iDpratioca));
+        	k2.getPratioci2().add(korisnik);
+        	korisnikService.save(korisnik);
+        	korisnikService.save(k2);
+        	
+        if(korisnik !=null) {
+            return new ResponseEntity<>(toKorisnikDto.convert(korisnik), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_KORISNIK', 'ROLE_ADMIN')")
+    @GetMapping("/unsubscribe/{id}")
+    public ResponseEntity<KorisnikDTO> unsubscribe(
+    		@RequestParam(required = false ) String iDpratioca,
+    		@PathVariable Long id){
+    	 Korisnik korisnik = korisnikService.findOneId(id);
+     	System.out.println(iDpratioca);
+     	korisnik.getPratioci().remove(korisnikService.findOneId(Long.parseLong(iDpratioca)));
+     	//video.getVlasnik().getPratioci2().add(video.getVlasnik());
+     	Korisnik k2= korisnikService.findOneId(Long.parseLong(iDpratioca));
+    	k2.getPratioci2().remove(korisnik);
+     	
+     	korisnikService.save(korisnik);
+        	
+        if(korisnik !=null) {
+            return new ResponseEntity<>(toKorisnikDto.convert(korisnik), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

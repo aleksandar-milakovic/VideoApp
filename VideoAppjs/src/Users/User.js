@@ -92,7 +92,7 @@ async subscribe(e){
                   iDpratioca: window.localStorage['id']
                 }
               };
-    let response = await VideoAxios.get("/videos/subscribe/" +this.state.video.id, config);
+    let response = await VideoAxios.get("/korisnici/subscribe/" +this.state.korisnik.id, config);
             //console.log(zadatakDTO)
    window.location.reload()
 }catch(error){
@@ -112,7 +112,7 @@ async unsubscribe(e){
             iDpratioca: window.localStorage['id']
           }
         };
-let response = await VideoAxios.get("/videos/unsubscribe/" +this.state.video.id, config);
+let response = await VideoAxios.get("/korisnici/unsubscribe/" +this.state.korisnik.id, config);
       //console.log(zadatakDTO)
 window.location.reload()
 }catch(error){
@@ -138,6 +138,9 @@ delete(videoId) {
       alert('Error occured please try again!');
    });
 } 
+add(id) {
+    this.props.history.push("/videoAdd/"+id);
+  }
 sort1(){
   this.state.videi.sort((a,b) => a.brojPregleda-b.brojPregleda);
   this.setState({
@@ -170,7 +173,7 @@ sort4(){
             this.props.history.push("/video/"+id);
           }
     render(){
-          if((window.localStorage['role']=="ROLE_KORISNIK" && window.localStorage['id']!=this.state.video.korisnikId)
+          if((window.localStorage['role']=="ROLE_KORISNIK" && window.localStorage['id']!=this.state.korisnik.id)
           ||window.localStorage['role']==null &&(this.state.video.vidljivost=='PRIVATNI'||this.state.video.blokiran==true)
         ){
 
@@ -208,7 +211,12 @@ sort4(){
 
             <tr>Blokiran</tr>
             <td>{this.state.korisnik.blokiran==true ? "DA":"NE"}</td>
-   
+            
+            {window.localStorage['role']=='ROLE_ADMIN' ||window.localStorage['id']==this.state.korisnik.id ?
+                  [
+                  <td><Button variant="danger" onClick={() => this.add(this.state.korisnik.id)}>Add video</Button>
+                </td>]
+                  :null}
           
           </Table>
          
@@ -260,7 +268,7 @@ sort4(){
                    <tr>{"Kreirano "+ video.datumKreiranja}</tr>
                    <tr>{video.brojPregleda+ " pregled/a"}</tr>
                  
-                   {window.localStorage['role']=='ROLE_ADMIN' ||window.localStorage['id']==this.state.video.korisnikId ?
+                   {window.localStorage['role']=='ROLE_ADMIN' ||window.localStorage['id']==this.state.korisnik.id ?
                   [
                   <td><Button variant="danger" onClick={() => this.delete(video.id)}>Delete</Button>
                 </td>]

@@ -105,6 +105,7 @@ public class VideoController {
         Video video = videoService.findOneId(id);
         	System.out.println(iDpratioca);
         	video.getVlasnik().getPratioci().add(korSer.findOneId(Long.parseLong(iDpratioca)));
+        	video.getVlasnik().getPratioci2().add(video.getVlasnik());
         	
         	videoService.save(video);
         	
