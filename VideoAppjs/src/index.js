@@ -16,6 +16,7 @@ import Users from "./Users/Users";
 import User from "./Users/User";
 import VideoAxios from "./apis/VideoAxios";
 import VideoAdd from "./components/Video/VideoAdd";
+import UserEdit from "./Users/UserEdit";
 
 class App extends React.Component {
   constructor(){
@@ -26,7 +27,9 @@ class App extends React.Component {
   }
 
   goToUser(id) {
+   
     this.props.history.push("/video/"+id);
+    window.location.reload()
   }
 
   render() {
@@ -77,6 +80,7 @@ class App extends React.Component {
                <Route exact path="/videoAdd/:id" component={VideoAdd} />
                <Route exact path="/videoEdit/:id" component={VideoEdit} />
                <Route exact path="/user/:id" component={User} />
+               <Route exact path="/userEdit/:id" component={UserEdit} />
                
                 <Route component={NotFound} />
               </Switch>

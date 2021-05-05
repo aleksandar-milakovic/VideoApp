@@ -36,7 +36,7 @@ public class KorisnikDTO {
 
     private String datumKreiranja;
     
-    
+    private String lozinka;
 
 	private List<Long> idpratioca = new ArrayList<>();
 	
@@ -145,6 +145,14 @@ public class KorisnikDTO {
 
 	public void setPratioci(List<KorisnikDTO> pratioci) {
 		this.pratioci = pratioci;
+	}
+
+	public String getLozinka() {
+		return lozinka;
+	}
+
+	public void setLozinka(String lozinka) {
+		this.lozinka = lozinka;
 	}
 	
 	

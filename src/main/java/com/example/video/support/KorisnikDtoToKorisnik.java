@@ -8,6 +8,7 @@ package com.example.video.support;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import com.example.video.enumeration.KorisnickaUloga;
 import com.example.video.model.Korisnik;
 import com.example.video.service.KorisnikService;
 import com.example.video.web.dto.KorisnikDTO;
@@ -42,6 +43,15 @@ public class KorisnikDtoToKorisnik implements Converter<KorisnikDTO, Korisnik> {
             entity.seteMail(korisnikDTO.geteMail());
             entity.setIme(korisnikDTO.getIme());
             entity.setPrezime(korisnikDTO.getPrezime());
+            entity.setBlokiran(korisnikDTO.getBlokiran());
+            if(korisnikDTO.getUloga().equalsIgnoreCase("ADMIN")) {
+            	entity.setUloga(KorisnickaUloga.ADMIN);
+            	System.out.println("bababababb");
+            }else {
+            	entity.setUloga(KorisnickaUloga.KORISNIK);
+            }
+            
+            System.out.println(entity.getUloga());  
         }
 
         return entity;

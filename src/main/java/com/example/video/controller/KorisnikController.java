@@ -146,8 +146,8 @@ public class KorisnikController {
         return new ResponseEntity<>(toKorisnikDto.convert(korisnici.getContent()),headers, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_KORISNIK')")
-    @RequestMapping(value="/{id}", method = RequestMethod.PUT, params = "promenaLozinke")
+    @PreAuthorize("permitAll()")
+    @RequestMapping(value="/promenaLozinke/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> changePassword(@PathVariable Long id, @RequestBody KorisnikPromenaLozinkeDto dto){
         // ova metoda se "okida" kada se primi PUT /korisnici?promenaLozinke
         // pogrešno bi bilo mapirati na npr. PUT /korisnici/lozinke, pošto "lozinka" nije punopravan REST resurs!
@@ -155,7 +155,9 @@ public class KorisnikController {
         if(!dto.getLozinka().equals(dto.getPonovljenaLozinka())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
+        System.out.println(dto.getStaraLozinka());
+        System.out.println(dto.getLozinka());
+        System.out.println(dto.getPonovljenaLozinka());
         boolean rezultat;
         try {
             rezultat = korisnikService.changePassword(id, dto);

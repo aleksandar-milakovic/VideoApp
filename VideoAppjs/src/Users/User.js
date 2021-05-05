@@ -141,6 +141,9 @@ delete(videoId) {
 add(id) {
     this.props.history.push("/videoAdd/"+id);
   }
+  editProfile(id) {
+    this.props.history.push("/userEdit/"+id);
+  }
 sort1(){
   this.state.videi.sort((a,b) => a.brojPregleda-b.brojPregleda);
   this.setState({
@@ -200,6 +203,10 @@ sort4(){
             <Table >
             <tr>Korisnicko ime</tr>
             <td>{this.state.korisnik.korisnickoIme}</td>
+            <tr>Email</tr>
+            <td>{this.state.korisnik.eMail}</td>
+            <tr>Ime i prezime</tr>
+            <td>{this.state.korisnik.ime + " "+ this.state.korisnik.prezime}</td>
             
             <tr>Broj pratilaca</tr>
             <td>{this.state.korisnik.brojPratilaca}</td>
@@ -215,6 +222,7 @@ sort4(){
             {window.localStorage['role']=='ROLE_ADMIN' ||window.localStorage['id']==this.state.korisnik.id ?
                   [
                   <td><Button variant="danger" onClick={() => this.add(this.state.korisnik.id)}>Add video</Button>
+                  <Button variant="primary" onClick={() => this.editProfile(this.state.korisnik.id)}>Edit profile</Button>
                 </td>]
                   :null}
           

@@ -1,12 +1,18 @@
 package com.example.video.support;
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.example.video.model.Korisnik;
 import com.example.video.web.dto.KorisnikDTO;
+
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +43,8 @@ public class KorisnikToKorisnikDto implements Converter<Korisnik, KorisnikDTO>{
         korisnikDTO.setBrojPratilaca(korisnik.getPratioci().size());
         korisnikDTO.setVidei(toVideoDto.convert(korisnik.getVidei()));
         korisnikDTO.setDatumKreiranja(korisnik.getDatumReg().toString());
+      
+        korisnikDTO.setLozinka(korisnik.getLozinka());
         List<Long> idijevi = new ArrayList<>();
         for (Korisnik korisnik1 : korisnik.getPratioci()) {
         	idijevi.add(korisnik1.getId());
