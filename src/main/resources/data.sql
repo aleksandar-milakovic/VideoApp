@@ -1,7 +1,7 @@
 
 
-INSERT INTO korisnik (id, e_mail, korisnicko_ime, lozinka, ime, prezime, uloga)
-              VALUES (1,'a1@gmail.com','miroslav','$2y$12$NH2KM2BJaBl.ik90Z1YqAOjoPgSd0ns/bF.7WedMxZ54OhWQNNnh6','Miroslav','Simic','ADMIN');
+INSERT INTO korisnik (id, e_mail, korisnicko_ime, lozinka, ime, prezime, uloga,datum_reg)
+              VALUES (1,'a1@gmail.com','miroslav','$2y$12$NH2KM2BJaBl.ik90Z1YqAOjoPgSd0ns/bF.7WedMxZ54OhWQNNnh6','Miroslav','Simic','ADMIN','2021-01-05');
 INSERT INTO korisnik (id, e_mail, korisnicko_ime, lozinka, ime, prezime, uloga,opis_kanala,blokiran,datum_reg)
               VALUES (2,'b1@gmail.com','tamara','$2y$12$DRhCpltZygkA7EZ2WeWIbewWBjLE0KYiUO.tHDUaJNMpsHxXEw9Ky','Tamara','Milosavljevic','KORISNIK','kanal o satovima',false,'2021-04-05');
 INSERT INTO korisnik (id, e_mail, korisnicko_ime, lozinka, ime, prezime, uloga,opis_kanala,blokiran,datum_reg )
@@ -17,6 +17,8 @@ INSERT INTO korisnik_pratioci (korisnik_id,pratilac_id) VALUES (3,2);
 INSERT INTO korisnik_pratioci (korisnik_id,pratilac_id) VALUES (4,2);  
 INSERT INTO korisnik_pratioci (korisnik_id,pratilac_id) VALUES (3,4);
 
+INSERT INTO pratioci_korisnici(pratilac_id,korisnik_id) VALUES (2,3);
+INSERT INTO pratioci_korisnici(pratilac_id,korisnik_id) VALUES (2,4);
 
 INSERT INTO video (id,video,slicica,opis,vidljivost,vidljivost_rejtinga,dozvoljeni_komentari,blokiran,broj_pregleda,datum_kreiranja, vlasnik_id)
 VALUES (1,'https://www.youtube.com/watch?v=mTOoLCtrjkc&t=638s&ab_channel=SatnaRuci','http://i3.ytimg.com/vi/mTOoLCtrjkc/maxresdefault.jpg','OPIS 1','JAVNI',true,true,false,45,'2020-04-06',1);

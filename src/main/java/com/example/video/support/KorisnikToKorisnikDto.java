@@ -13,7 +13,14 @@ import java.util.List;
 
 @Component
 public class KorisnikToKorisnikDto implements Converter<Korisnik, KorisnikDTO>{
-
+	
+	@Autowired
+	private VideotoVideoDTO toVideoDto;
+	
+	
+	@Autowired
+	private KorisnikToKorisnikDto toKorisnikDto;
+	
     @Override
     public KorisnikDTO convert(Korisnik korisnik) {
         KorisnikDTO korisnikDTO = new KorisnikDTO();
@@ -25,6 +32,18 @@ public class KorisnikToKorisnikDto implements Converter<Korisnik, KorisnikDTO>{
         korisnikDTO.setPrezime(korisnik.getPrezime());
         korisnikDTO.setKorisnickoIme(korisnik.getKorisnickoIme());
         korisnikDTO.setUloga(korisnik.getUloga().toString());
+        korisnikDTO.setOpis(korisnik.getOpisKanala());
+        korisnikDTO.setBlokiran(korisnik.getBlokiran());
+        korisnikDTO.setBrojPratilaca(korisnik.getPratioci().size());
+        korisnikDTO.setVidei(toVideoDto.convert(korisnik.getVidei()));
+        korisnikDTO.setDatumKreiranja(korisnik.getDatumReg().toString());
+        List<Long> idijevi = new ArrayList<>();
+        for (Korisnik korisnik1 : korisnik.getPratioci()) {
+        	idijevi.add(korisnik1.getId());
+			
+		}
+        korisnikDTO.setIdpratioca(idijevi);
+        korisnikDTO.setPratioci(toKorisnikDto.convert(korisnik.getPratioci2()));
         return korisnikDTO;
     }
 

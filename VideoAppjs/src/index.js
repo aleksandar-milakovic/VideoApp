@@ -13,6 +13,7 @@ import Videos from "./components/Video/Videos";
 import Video from "./components/Video/Video";
 import VideoEdit from "./components/Video/VideoEdit";
 import Users from "./Users/Users";
+import User from "./Users/User";
 
 class App extends React.Component {
   constructor(){
@@ -62,6 +63,7 @@ class App extends React.Component {
                <Route exact path="/users" component={Users} />
                <Route exact path="/video/:id" component={Video} />
                <Route exact path="/videoEdit/:id" component={VideoEdit} />
+               <Route exact path="/user/:id" component={User} />
                
                 <Route component={NotFound} />
               </Switch>

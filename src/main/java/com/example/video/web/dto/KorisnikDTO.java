@@ -1,7 +1,7 @@
 package com.example.video.web.dto;
 
-
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class KorisnikDTO {
 
@@ -23,8 +23,26 @@ public class KorisnikDTO {
     
     
     private String uloga;
+    
+    
+    private String opis;
+    
+    private Boolean blokiran;
+    
+    
+    private Integer brojPratilaca;
+    
+    private List<VideoDTO> videi = new ArrayList<>();
 
     private String datumKreiranja;
+    
+    
+
+	private List<Long> idpratioca = new ArrayList<>();
+	
+	private List<KorisnikDTO> pratioci = new ArrayList<>();
+	
+	
     public Long getId() {
         return id;
     }
@@ -80,6 +98,56 @@ public class KorisnikDTO {
 	public void setUloga(String uloga) {
 		this.uloga = uloga;
 	}
+
+	public String getOpis() {
+		return opis;
+	}
+
+	public void setOpis(String opis) {
+		this.opis = opis;
+	}
+
+	public Boolean getBlokiran() {
+		return blokiran;
+	}
+
+	public void setBlokiran(Boolean blokiran) {
+		this.blokiran = blokiran;
+	}
+
+	public Integer getBrojPratilaca() {
+		return brojPratilaca;
+	}
+
+	public void setBrojPratilaca(Integer brojPratilaca) {
+		this.brojPratilaca = brojPratilaca;
+	}
+
+	public List<VideoDTO> getVidei() {
+		return videi;
+	}
+
+	public void setVidei(List<VideoDTO> videi) {
+		this.videi = videi;
+	}
+
+	public List<Long> getIdpratioca() {
+		return idpratioca;
+	}
+
+	public void setIdpratioca(List<Long> idpratioca) {
+		this.idpratioca = idpratioca;
+	}
+
+	public List<KorisnikDTO> getPratioci() {
+		return pratioci;
+	}
+
+	public void setPratioci(List<KorisnikDTO> pratioci) {
+		this.pratioci = pratioci;
+	}
+	
+	
 	
    
 }

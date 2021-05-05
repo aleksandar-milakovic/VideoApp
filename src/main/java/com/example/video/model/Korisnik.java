@@ -48,6 +48,11 @@ public class Korisnik {
             inverseJoinColumns = @JoinColumn(name = "pratilac_id", referencedColumnName = "id"))
     private List<Korisnik> pratioci = new ArrayList<>();
     
+    @ManyToMany
+    @JoinTable(name = "pratioci_korisnici",   joinColumns =  @JoinColumn(name = "pratilac_id", referencedColumnName = "id"),
+    		inverseJoinColumns =  @JoinColumn(name = "korisnik_id", referencedColumnName = "id"))
+    private List<Korisnik> pratioci2 = new ArrayList<>();
+    
     @Column
     private LocalDate datumReg;
     
@@ -179,6 +184,15 @@ public class Korisnik {
 
 	public void setVidei(List<Video> videi) {
 		this.videi = videi;
+	}
+	
+	
+	public List<Korisnik> getPratioci2() {
+		return pratioci2;
+	}
+
+	public void setPratioci2(List<Korisnik> pratioci2) {
+		this.pratioci2 = pratioci2;
 	}
 
 	@Override
