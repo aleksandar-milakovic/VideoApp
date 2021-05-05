@@ -16,11 +16,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.video.enumeration.KorisnickaUloga;
 import com.example.video.model.Korisnik;
+import com.example.video.model.Video;
 import com.example.video.security.TokenUtils;
 import com.example.video.service.KorisnikService;
 import com.example.video.support.KorisnikDtoToKorisnik;
@@ -134,8 +136,8 @@ public class KorisnikController {
     		@RequestParam(required = false, defaultValue = "") String prezime,
     		@RequestParam(required = false ) KorisnickaUloga uloga,
     		
-    		@RequestParam(defaultValue="0") int page) {
-        Page<Korisnik> korisnici = korisnikService.find(eMail, ime, korisnickoIme, prezime,uloga, page);
+    		@RequestParam(defaultValue="0") int pageNo) {
+        Page<Korisnik> korisnici = korisnikService.find(eMail, ime, korisnickoIme, prezime,uloga, pageNo);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Total-Pages", Integer.toString(korisnici.getTotalPages()));
 
@@ -183,4 +185,24 @@ public class KorisnikController {
             return ResponseEntity.notFound().build();
         }
     }
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<Void> delete(@PathVariable Long id){
+	  
+		
+	     
+    	Korisnik k= korisnikService.findOneId(id);
+	  
+
+		
+		
+		
+    	Korisnik korisnik = korisnikService.delete(id);
+	 // Festival sacuvaniZadatak = porService.save(obrisanZadatak);
+	    if(korisnik != null) { 
+	        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	    } else {
+	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	}
 }

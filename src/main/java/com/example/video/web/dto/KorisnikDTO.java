@@ -20,6 +20,9 @@ public class KorisnikDTO {
 
     //@Size(min=3, max=50)
     private String prezime;
+    
+    
+    private String uloga;
 
     private String datumKreiranja;
     public Long getId() {
@@ -70,5 +73,13 @@ public class KorisnikDTO {
 		this.datumKreiranja = datumKreiranja;
 	}
 
+	public String getUloga() {
+		return uloga;
+	}
+
+	public void setUloga(String uloga) {
+		this.uloga = uloga;
+	}
+	
    
 }

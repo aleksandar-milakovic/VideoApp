@@ -412,14 +412,14 @@ sort7(){
               })}
           
     
-             <div style={{alignSelf:'end'}}><td> <Button onClick={()=>this.sort()}>sort by naziv DESC</Button>
+             <ButtonGroup><Button onClick={()=>this.sort()}>sort by naziv DESC</Button>
              <Button onClick={()=>this.sort1()}>sort by naziv ASC</Button><br/>
               <Button onClick={()=>this.sort2()}>sort by username DESC</Button>
              <Button onClick={()=>this.sort3()}>sort by username ASC</Button><br/>
              <Button onClick={()=>this.sort4()}>sort by broj Pregleda ASC</Button>
              <Button onClick={()=>this.sort5()}>sort by broj Pregleda DESC</Button><br/>
              <Button onClick={()=>this.sort7()}>sort by datum otpremanja ASC</Button>
-             <Button onClick={()=>this.sort6()}>sort by datum otpremanja DESC</Button></td></div>
+             <Button onClick={()=>this.sort6()}>sort by datum otpremanja DESC</Button></ButtonGroup>
              
          <div style={{marginRight:'auto',marginLeft:'auto',marginTop:'auto'}}> <ButtonGroup style={{ marginTop: 25 }}>
           <Button 

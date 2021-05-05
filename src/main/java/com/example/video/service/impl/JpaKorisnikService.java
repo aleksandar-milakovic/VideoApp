@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.video.enumeration.KorisnickaUloga;
 import com.example.video.model.Korisnik;
+import com.example.video.model.Video;
 import com.example.video.repository.KorisnikRepository;
 import com.example.video.service.KorisnikService;
 import com.example.video.web.dto.KorisnikPromenaLozinkeDto;
@@ -49,9 +50,20 @@ public class JpaKorisnikService implements KorisnikService {
     }
 
     @Override
-    public void delete(Long id) {
-        korisnikRepository.deleteById(id);
-    }
+    public Korisnik delete(Long id) {
+java.util.Optional<Korisnik> kor=  korisnikRepository.findById(id);
+		
+		if (kor.isPresent()){
+		korisnikRepository.deleteById(id);
+		//porRep.delete(por.get());
+			
+			
+			return kor.get();
+		}
+		return null;
+	}
+
+    
 
     @Override
     public Optional<Korisnik> findbyKorisnickoIme(String korisnickoIme) {

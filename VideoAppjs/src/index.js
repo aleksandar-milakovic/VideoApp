@@ -12,6 +12,7 @@ import Register from './components/Register.js';
 import Videos from "./components/Video/Videos";
 import Video from "./components/Video/Video";
 import VideoEdit from "./components/Video/VideoEdit";
+import Users from "./Users/Users";
 
 class App extends React.Component {
   constructor(){
@@ -40,6 +41,11 @@ class App extends React.Component {
                 <Nav.Link style={{color:'red',fontSize:'25px'}} as={Link} to="/videos">
                   Videos
                 </Nav.Link>
+
+                {window.localStorage['role']=='ROLE_ADMIN'?
+                <Nav.Link style={{color:'red',fontSize:'25px'}} as={Link} to="/users">
+                  USERS
+                </Nav.Link> :null}
                 
               { jwt!=null ?
                 <div   style={{float:'right',paddingLeft:'1100px'}}><Nav.Link onClick={()=>logout()}>Logout</Nav.Link></div>:
@@ -53,6 +59,7 @@ class App extends React.Component {
                 <Route exact path="/login" component={Login} />
                <Route exact path="/register" component={Register}/>
                <Route exact path="/videos" component={Videos} />
+               <Route exact path="/users" component={Users} />
                <Route exact path="/video/:id" component={Video} />
                <Route exact path="/videoEdit/:id" component={VideoEdit} />
                
