@@ -34,6 +34,7 @@ public class VideotoVideoDTO implements Converter<Video, VideoDTO> {
 	        videoDTO.setImeVlasnika(video.getVlasnik().getIme());
 	        videoDTO.setPrezimeVlasnika(video.getVlasnik().getPrezime());
 	        videoDTO.setBlokiran(video.getBlokiran());
+	        videoDTO.setKorisnikBlokiran(video.getVlasnik().getBlokiran() );
 	        int like= 0;
 	        int dislike=0;
 	        for (LikeDislike ld : video.getLajkovi()) {

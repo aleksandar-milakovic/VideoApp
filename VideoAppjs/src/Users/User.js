@@ -177,7 +177,7 @@ sort4(){
           }
     render(){
           if((window.localStorage['role']=="ROLE_KORISNIK" && window.localStorage['id']!=this.state.korisnik.id)
-          ||window.localStorage['role']==null &&(this.state.video.vidljivost=='PRIVATNI'||this.state.video.blokiran==true)
+          ||window.localStorage['role']==null &&(this.state.korisnik.blokiran==true)
         ){
 
              return (

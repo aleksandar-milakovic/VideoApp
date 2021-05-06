@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Row, Col, Button,Image, Table} from 'react-bootstrap';
+import { Form, Row, Col, Button,Image, Table,ButtonGroup} from 'react-bootstrap';
 import VideoAxios from '../../apis/VideoAxios';
 
 class Video extends React.Component {
@@ -22,8 +22,19 @@ class Video extends React.Component {
           idpratioca:[],
           korisnikId:"",
           vidljivost:"",
-          blokiran:""
+          blokiran:"",
+          korisnikBlokiran:"",
+          vidljivostRejtinga:"",
+          dozvoljeniKomentari:""
       }
+      let komentar = {
+        id:"",
+        vlasnikId: window.localStorage['id'],
+        videoId: "",
+        sadrzaj: "",
+        datumKreiranja: "",
+       
+    }
       let flag = false
       this.state = { 
         komentari:[],
@@ -31,6 +42,8 @@ class Video extends React.Component {
         idpratioca:[],
         flag:true,
         flag2:true,
+        sadrzaj:"",
+        komentar:komentar
         // stanja:[],
         // sprintovi:[]
         // search: search
@@ -76,6 +89,104 @@ class Video extends React.Component {
 
         
         }
+        async createComment(e){
+          e.preventDefault();
+          
+          var a= new Date(),
+          a= a.getFullYear()+"-"+(a.getMonth()<=9 ? ("0"+a.getMonth()):a.getMonth())
+          +"-"+(a.getDate()<=9 ? ("0"+a.getDate()):a.getDate())
+       
+          try{
+  
+            let video = this.state.video;
+            let komentarDTO = {
+               
+                videoId:video.id ,
+                vlasnikId:window.localStorage['id'],
+                datumKreiranja:a,
+                sadrzaj:this.state.sadrzaj,
+                
+               
+                
+            }
+  
+      let response = await VideoAxios.post("/komentari/" , komentarDTO);
+              console.log(komentarDTO)
+      // this.props.history.push("/user/"+this.props.match.params.id);
+      var sadrzaj1= this.state.komentar.sadrzaj
+      this.setState({sadrzaj1:this.state.sadrzaj})
+      console.log(this.state.komentar.sadrzaj)
+      window.location.reload()
+      alert("comment added")
+  }catch(error){
+      alert("Couldn't save the video");
+  }
+  }   
+
+  async editComment(e,id,koment){
+    e.preventDefault();
+    
+    var a= new Date(),
+    a= a.getFullYear()+"-"+(a.getMonth()<=9 ? ("0"+a.getMonth()):a.getMonth())
+    +"-"+(a.getDate()<=9 ? ("0"+a.getDate()):a.getDate())
+    this.setState({sadrzaj:koment})
+    try{
+
+      let video = this.state.video;
+      let komentarDTO = {
+          id:id,
+          videoId:video.id ,
+          vlasnikId:window.localStorage['id'],
+          datumKreiranja:a,
+          sadrzaj:this.state.komentar.sadrzaj,
+          
+         
+          
+      }
+
+let response = await VideoAxios.put("/komentari/"+id , komentarDTO);
+        console.log(komentarDTO)
+// this.props.history.push("/user/"+this.props.match.params.id);
+var sadrzaj1= this.state.komentar.sadrzaj
+this.setState({sadrzaj1:this.state.sadrzaj})
+console.log(this.state.komentar.sadrzaj)
+window.location.reload()
+alert("comment added")
+}catch(error){
+alert("Couldn't save the video");
+}
+}   
+
+  myFuncti() {
+   
+    var checkBox = document.getElementById("myCheck");
+    // Get the output text
+    var text = document.getElementById("aca");
+  
+    // If the checkbox is checked, display the output text
+    if (checkBox.checked == true){
+      text.style.visibility = "visible";
+    } else {
+      text.style.visibility = "hidden";
+    }
+  }
+
+  valueInputChanged(e) {
+    let input = e.target;
+  
+    let name = input.name;
+    let value = input.value;
+  console.log(value)
+ 
+
+    let sadrzaj = this.state.komentar;
+    sadrzaj[name] = value;
+  
+    this.setState({ sadrzaj: sadrzaj });
+  
+
+
+  }
 
     
     getPorukaById(videoId) {
@@ -187,8 +298,9 @@ sort4(){
             this.props.history.push("/video/"+id);
           }
     render(){
-          if((window.localStorage['role']=="ROLE_KORISNIK" && window.localStorage['id']!=this.state.video.korisnikId)
-          ||window.localStorage['role']==null &&(this.state.video.vidljivost=='PRIVATNI'||this.state.video.blokiran==true)
+          if((this.state.video.vidljivost=='PRIVATNI'||this.state.video.blokiran==true
+          ||this.state.video.korisnikBlokiran==true)&&(window.localStorage['role']=="ROLE_KORISNIK" && window.localStorage['id']!=this.state.video.korisnikId||
+          window.localStorage['role']==null)
         ){
 
              return (
@@ -227,13 +339,17 @@ sort4(){
           </Table>
          
           </div>
-         
-          <thead>{ "Like/Dislike "}<Button disabled='true'>{this.state.video.brojLajkova+"/"+this.state.video.brojDislajkova}</Button></thead> 
-             {
+          { (this.state.video.vidljivostRejtinga==false && 
+          (window.localStorage['role']=="ROLE_KORISNIK" 
+          && window.localStorage['id']!=this.state.video.korisnikId)
+          ||window.localStorage['role']==null)?
+          null:
+          <div><Button class="like" disabled='true'>
+            
+          {this.state.video.brojLajkova+"/"+this.state.video.brojDislajkova}</Button> 
+         </div>}
 
-              
-              console.log(this.state.video)
-             }
+             
               
             {
             
@@ -242,10 +358,10 @@ sort4(){
             // new Map();
 
                               
-            this.state.flag== true ?
+            this.state.flag== true  ?
             [
-            <td><Button style={{visibility:this.state.flag2==false ? 'hidden':'visible'}}   onClick={(event)=>{this.unsubscribe(event);}} >UNSUBSCRIBE</Button></td>]
-            :<Button style={{visibility:this.state.flag2==false ? 'hidden':'visible'}} onClick={(event)=>{this.subscribe(event);}}>SUBSCRIBE</Button> }
+            <td><Button style={{visibility:(this.state.flag2==false || window.localStorage['role']==null) ? 'hidden':'visible'}}   onClick={(event)=>{this.unsubscribe(event);}} >UNSUBSCRIBE</Button></td>]
+            :<Button style={{visibility:(this.state.flag2==false || window.localStorage['role']==null) ? 'hidden':'visible'}} onClick={(event)=>{this.subscribe(event);}}>SUBSCRIBE</Button> }
         
                      
                         
@@ -255,8 +371,13 @@ sort4(){
          
            
             
-
+              
             </Table>
+            { (this.state.video.dozvoljeniKomentari==false && 
+          (window.localStorage['role']=="ROLE_KORISNIK" 
+          && window.localStorage['id']!=this.state.video.korisnikId
+          ||window.localStorage['role']==null))?
+          null:
             <Table id="movies-table" style={{marginTop:5}}>
             <thead>
                 <p>KOMENTARI</p>
@@ -272,23 +393,51 @@ sort4(){
               {this.state.komentari.map((komentar) => {
                 return (
                   <tr key={komentar.id}>
-                    <td>{komentar.sadrzaj}</td>
+                   <td> <Form.Group>
+           
+            {/* <Form.Control */}
+              {/* onChange={(e) => this.valueInputChanged(e)}
+               
+              value={this.state.komentar.sadrzaj}
+              name="sadrzaj"
+              as="textarea"
+            
+            >
+            </Form.Control>*/ }
+          </Form.Group>{komentar.sadrzaj}</td> 
                     <td>{komentar.imeVlasnika+ " "+komentar.prezimeVlasnika}</td>
                     <td>{komentar.datumKreiranja}</td>
                     <td>{komentar.brojLajkova+"/"+komentar.brojDislajkova}</td>
                    
 
-                
+                    {/* <Button onClick={(event)=>this.editComment(event,komentar.id,komentar.sadrzaj)}>Edit COMMENT</Button> */}
                   </tr>
                 );
               })}
             </tbody>
+            Comment: <input type='checkbox' id="myCheck" onClick={(event)=>{this.myFuncti(event);}} ></input>
+          
+         
+          <div id="aca">
+         <Form.Group>
+            <Form.Label>ENTER comment</Form.Label>
+            <Form.Control
+              onChange={(e) => this.valueInputChanged(e)}
+           
+              name="sadrzaj"
+              as="input"
+              type="text">
+            </Form.Control>
+          </Form.Group>
+          <Button onClick={(event)=>this.createComment(event)}>Add COMMENT</Button></div>
             
-          </Table>
+          </Table>}
+         <ButtonGroup>
           <Button onClick={()=>this.sort1()}>sort by date DESC</Button><br/>
               <Button onClick={()=>this.sort2()}>sort by date ASC</Button>
              <Button onClick={()=>this.sort3()}>sort by likes ASC</Button><br/>
-             <Button onClick={()=>this.sort4()}>sort by likes DESC</Button>
+             <Button onClick={()=>this.sort4()}>sort by likes DESC</Button></ButtonGroup>
+         
             </div>
           
           

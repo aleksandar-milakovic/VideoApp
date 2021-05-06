@@ -41,6 +41,8 @@ public class VideoDTO {
 	private String prezimeVlasnika;
 	
 	
+	private Boolean korisnikBlokiran;
+	
 	private List<Long> idpratioca = new ArrayList<>();
 	
 	private Long korisnikId;
@@ -185,6 +187,14 @@ public class VideoDTO {
 
 	public void setIdpratioca(List<Long> idpratioca) {
 		this.idpratioca = idpratioca;
+	}
+
+	public Boolean getKorisnikBlokiran() {
+		return korisnikBlokiran;
+	}
+
+	public void setKorisnikBlokiran(Boolean korisnikBlokiran) {
+		this.korisnikBlokiran = korisnikBlokiran;
 	}
 	
 	
