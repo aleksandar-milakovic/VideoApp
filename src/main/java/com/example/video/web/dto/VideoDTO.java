@@ -1,7 +1,9 @@
 package com.example.video.web.dto;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.example.video.enumeration.Vidljivost;
 import com.example.video.model.Komentar;
@@ -40,6 +42,15 @@ public class VideoDTO {
 	
 	private String prezimeVlasnika;
 	
+	private List<Long> idLajkova = new ArrayList<>();
+	
+	private List<Long> idDislajkova = new ArrayList<>();
+	
+	
+	private List<Long> idLikeDislike = new ArrayList<>();
+	
+	
+	  Map<Long, String> mapaLajkova = (Map<Long, String>) new HashMap();
 	
 	private Boolean korisnikBlokiran;
 	
@@ -48,6 +59,9 @@ public class VideoDTO {
 	private Long korisnikId;
 	
 	private List<KomentarDTO> komentari= new ArrayList<>();
+	
+	
+	
 
 	public Long getId() {
 		return id;
@@ -195,6 +209,39 @@ public class VideoDTO {
 
 	public void setKorisnikBlokiran(Boolean korisnikBlokiran) {
 		this.korisnikBlokiran = korisnikBlokiran;
+	}
+
+	public List<Long> getIdLajkova() {
+		return idLajkova;
+	}
+
+	public void setIdLajkova(List<Long> idLajkova) {
+		this.idLajkova = idLajkova;
+	}
+
+	public List<Long> getIdDislajkova() {
+		return idDislajkova;
+	}
+
+	public void setIdDislajkova(List<Long> idDislajkova) {
+		this.idDislajkova = idDislajkova;
+	}
+
+	public List<Long> getIdLikeDislike() {
+		return idLikeDislike;
+	}
+
+	public void setIdLikeDislike(List<Long> idLikeDislike) {
+		this.idLikeDislike = idLikeDislike;
+	}
+
+
+	public Map<Long, String> getMapaLajkova() {
+		return mapaLajkova;
+	}
+
+	public void setMapaLajkova(Map<Long, String> mapaLajkova) {
+		this.mapaLajkova = mapaLajkova;
 	}
 	
 	

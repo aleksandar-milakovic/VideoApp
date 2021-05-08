@@ -29,6 +29,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.video.model.Korisnik;
+import com.example.video.model.LikeDislike;
 import com.example.video.model.Video;
 import com.example.video.service.KorisnikService;
 import com.example.video.service.VideoService;
@@ -63,9 +65,13 @@ public class VideoController {
         if(dto.getId() != null ) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        Video video = toVideo.convert(dto);
+        for (Korisnik k : korSer.findAll()) {
+			video.getMapaLajkova().put(k, "null");
+		}
 
        
-        Video video = toVideo.convert(dto);
+      
 
         return new ResponseEntity<>(toVideoDto.convert(videoService.save(video)), HttpStatus.CREATED);
     }
@@ -84,18 +90,7 @@ public class VideoController {
         return new ResponseEntity<>(toVideoDto.convert(videoService.save(video)),HttpStatus.OK);
     }
 
-    @PreAuthorize("permitAll()")
-    @GetMapping("/{id}")
-    public ResponseEntity<VideoDTO> get(@PathVariable Long id){
-        Video video = videoService.findOneId(id);
-
-        if(video !=null) {
-            return new ResponseEntity<>(toVideoDto.convert(video), HttpStatus.OK);
-        }
-        else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);  
-        }
-    }
+  
     
     @PreAuthorize("hasAnyRole('ROLE_KORISNIK', 'ROLE_ADMIN')")
     @GetMapping("/subscribe/{id}")
@@ -117,15 +112,57 @@ public class VideoController {
         }
     }
     
-    @PreAuthorize("hasAnyRole('ROLE_KORISNIK', 'ROLE_ADMIN')")
-    @GetMapping("/unsubscribe/{id}")
-    public ResponseEntity<VideoDTO> unsubscribe(
-    		@RequestParam(required = false ) String iDpratioca,
-    		@PathVariable Long id){
+
+    @PreAuthorize("permitAll()")
+    @GetMapping("/{id}")
+    public ResponseEntity<VideoDTO> get(@PathVariable Long id){
         Video video = videoService.findOneId(id);
-        	System.out.println(iDpratioca);
-        	video.getVlasnik().getPratioci().remove(korSer.findOneId(Long.parseLong(iDpratioca)));
+        video.setBrojPregleda(video.getBrojPregleda()+1);
+        
+        videoService.save(video);
+
+        if(video !=null) {
+            return new ResponseEntity<>(toVideoDto.convert(video), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);  
+        }
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_KORISNIK', 'ROLE_ADMIN')")
+    @GetMapping("/like/")
+    public ResponseEntity<VideoDTO> like(
+    		@RequestParam(required = false ) String idKorisnika,
+    		@RequestParam(required = false ) String videoId
+    		){
+        Video video = videoService.findOneId(Long.parseLong(videoId));
+        video.getMapaLajkova().put(korSer.findOneId(Long.parseLong(idKorisnika)), "like");
+     	System.out.println(idKorisnika+"dsdaaddadsadsd");
+//        	LikeDislike like = new LikeDislike();
+//        	like.setDatumKreiranja(LocalDate.now());
+//        	like.setIsitLike(true);
+        	//like.setId(id);
+//        	video.getLajkovi().add(like);
+//        	
+        	videoService.save(video);
         	
+        if(video !=null) {
+            return new ResponseEntity<>(toVideoDto.convert(video), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_KORISNIK', 'ROLE_ADMIN')")
+    @GetMapping("/dislike/")
+    public ResponseEntity<VideoDTO> dislike(
+    		@RequestParam(required = false ) String idKorisnika,
+    		@RequestParam(required = false ) String videoId
+    	){
+       
+        Video video = videoService.findOneId(Long.parseLong(videoId));
+        video.getMapaLajkova().put(korSer.findOneId(Long.parseLong(idKorisnika)), "dislike");
         	videoService.save(video);
         	
         if(video !=null) {

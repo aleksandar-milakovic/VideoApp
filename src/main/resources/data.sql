@@ -41,6 +41,13 @@ VALUES (6,'https://www.youtube.com/watch?v=JJIc2aDbJIs&ab_channel=KAMBERizam','h
 INSERT INTO video (id,video,slicica,opis,vidljivost,vidljivost_rejtinga,dozvoljeni_komentari,blokiran,broj_pregleda,datum_kreiranja, vlasnik_id)
 VALUES (7,'https://www.youtube.com/watch?v=U86Qy6-3UMk&ab_channel=KAMBERizam','http://i3.ytimg.com/vi/U86Qy6-3UMk/maxresdefault.jpg','OPIS 7','UNLISTED',true,true,false,17000,'2020-04-08',3);
 
+INSERT INTO mapa (video_id, like_dislike, mapa_lajkova_key)
+VALUES (1, 'null', 2);
+INSERT INTO mapa (video_id, like_dislike, mapa_lajkova_key)
+VALUES (1, 'null', 3);
+INSERT INTO mapa (video_id, like_dislike, mapa_lajkova_key)
+VALUES (1, 'null', 4);
+
 INSERT INTO komentar (id,sadrzaj,datum_kreiranja,vlasnik_id,video_id) 
 VALUES (1,'SADRZAJ 1','2020-04-20',1,1);
 INSERT INTO komentar (id,sadrzaj,datum_kreiranja,vlasnik_id,video_id) 

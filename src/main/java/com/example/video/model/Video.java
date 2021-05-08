@@ -2,22 +2,24 @@ package com.example.video.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 
-import com.example.video.enumeration.KorisnickaUloga;
-import com.example.video.enumeration.Vidljivost;
 
 @Entity
 public class Video {
@@ -65,6 +67,13 @@ public class Video {
 	 	 
 	 	 @OneToMany(mappedBy = "video", fetch = FetchType.EAGER, cascade =CascadeType.DETACH)
 	 	 private List<Komentar> komentari = new ArrayList<>();
+	 	 
+	 	@ElementCollection
+	    @CollectionTable(name = "mapa", 
+	      joinColumns = {@JoinColumn(name = "video_id", referencedColumnName = "id")})
+	    @MapKeyColumn(name = "korisnik_id")
+	    @Column(name = "like_dislike")
+	 	 private Map<Korisnik, String> mapaLajkova = (Map<Korisnik, String>) new HashMap();
 
 		public Video() {
 			super();
@@ -172,6 +181,14 @@ public class Video {
 
 		public void setDozvoljeniKomentari(Boolean dozvoljeniKomentari) {
 			this.dozvoljeniKomentari = dozvoljeniKomentari;
+		}
+
+		public Map<Korisnik, String> getMapaLajkova() {
+			return mapaLajkova;
+		}
+
+		public void setMapaLajkova(Map<Korisnik, String> mapaLajkova) {
+			this.mapaLajkova = mapaLajkova;
 		}
 		
 		

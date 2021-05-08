@@ -1,7 +1,9 @@
 package com.example.video.support;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
@@ -37,20 +39,33 @@ public class VideotoVideoDTO implements Converter<Video, VideoDTO> {
 	        videoDTO.setKorisnikBlokiran(video.getVlasnik().getBlokiran() );
 	        int like= 0;
 	        int dislike=0;
-	        for (LikeDislike ld : video.getLajkovi()) {
-			if(ld.getIsitLike()==true) {
-				like++;
-			}
-		} 
-	        for (LikeDislike ld : video.getLajkovi()) {
-				if(ld.getIsitLike()==false) {
-					dislike++;
-				}
-			}
-	        
-	        videoDTO.setBrojLajkova(like);
-	        videoDTO.setBrojDislajkova(dislike);
-
+//	        for (LikeDislike ld : video.getLajkovi()) {
+//			if(ld.getIsitLike()==true) {
+//				like++;
+//			}
+//		} 
+//	        for (LikeDislike ld : video.getLajkovi()) {
+//				if(ld.getIsitLike()==false) {
+//					dislike++;
+//				}
+//			}
+	        List<Long> lajkovi = new ArrayList<>();
+	        List<Long> dislajkovi = new ArrayList<>();
+	        List<Long> likedislajkovi = new ArrayList<>();
+	        for(LikeDislike id : video.getLajkovi()) {
+	        	if(id.getIsitLike()==true) {
+	        		lajkovi.add(id.getId());
+	        		videoDTO.setIdLajkova(lajkovi);
+	        	}else {
+	        		dislajkovi.add(id.getId());
+	        		videoDTO.setIdDislajkova(dislajkovi);
+	        	}
+	        }
+	        for(LikeDislike id : video.getLajkovi()) {
+	        	likedislajkovi.add(id.getId());
+	        	videoDTO.setIdLikeDislike(likedislajkovi);
+	        }
+	       
 	        videoDTO.setKomentari(toKomDto.convert(video.getKomentari()));
 	       
 	        List<Long> idijevi = new ArrayList<>();
@@ -58,7 +73,31 @@ public class VideotoVideoDTO implements Converter<Video, VideoDTO> {
 	        	idijevi.add(korisnik.getId());
 				
 			}
-	        videoDTO.setIdpratioca(idijevi);
+	        List<Long> listaId = new ArrayList<>();
+	        List<String> likesId = new ArrayList<>(video.getMapaLajkova().values());
+	        for (String string : likesId) {
+				if (string.equalsIgnoreCase("like")) {
+					like++;
+				}else if (string.equalsIgnoreCase("dislike")){
+					dislike++;
+				}
+			}
+	        
+	        Map<Long, String> mapaLajkova = (Map<Long, String>) new HashMap();
+	        for (Korisnik k : video.getMapaLajkova().keySet()) {
+				
+	        	mapaLajkova.put(k.getId(), video.getMapaLajkova().get(k));
+			}
+	        videoDTO.setMapaLajkova(mapaLajkova);
+	        videoDTO.setBrojLajkova(like);
+	        videoDTO.setBrojDislajkova(dislike);
+
+	               for (Korisnik k : video.getMapaLajkova().keySet()) {
+	            	   		listaId.add(k.getId());
+	            	    
+	               }
+	            
+
 	        return videoDTO;
 	  
 		}

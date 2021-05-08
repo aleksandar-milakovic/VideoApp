@@ -43,7 +43,13 @@ class Video extends React.Component {
         flag:true,
         flag2:true,
         sadrzaj:"",
-        komentar:komentar
+        komentar:komentar,
+        lajkovi:false,
+        dislajkovi:true,
+        flag3:true,
+        idKor:[],
+        mapaLajkova:[]
+
         // stanja:[],
         // sprintovi:[]
         // search: search
@@ -64,14 +70,35 @@ class Video extends React.Component {
            /* if(res.data.idpratioca.length==0){
                 res.data.idpratioca.push(0)
             }*/
-            this.setState({video:res.data,komentari:res.data.komentari,idpratioca:res.data.idpratioca});
+            this.setState({video:res.data,komentari:res.data.komentari,idpratioca:res.data.idpratioca,
+            idLajkova:res.data.idLajkova,idDislajkova:res.data.idDislajkova,
+          idKor:res.data.idKor,mapaLajkova:res.data.mapaLajkova});
             console.log(window.localStorage['id']);
             let ulogovani = window.localStorage['id'];
             let a= this.state.idpratioca.toString()
-            let b= this.state.video.id
-            console.log(b);
+            let b= this.state.video.idDislajkova.toString()
+            let c= this.state.video.idLajkova
+            let d= ""  
+            
+               console.log( this.state.mapaLajkova[window.localStorage['id']])
+              
+            
+          
+              this.state.idDislajkova.forEach(element => {
+                if(this.state.video.idLikeDislike.includes(element)){
+                  this.setState({dislajkovi:this.state.video.idLikeDislike.includes(element)})  
+              d=true
+                 
+                }
+              
+              });
+
             console.log(this.state.video.blokiran+"sasas")
-            this.setState({flag:(a.includes(ulogovani)),flag2:(this.state.video.korisnikId!=window.localStorage['id'])})
+            this.setState({flag:(a.includes(ulogovani)),
+              flag2:(this.state.video.korisnikId!=window.localStorage['id'])
+              
+              
+          })
        })
         .catch(error => {
             // handle error
@@ -80,10 +107,7 @@ class Video extends React.Component {
          });
         console.log("test2");
         
-        this.state.idpratioca.forEach(element => {
-              console.log(element.key)
-             
-        });
+    
  
         
 
@@ -247,6 +271,62 @@ window.location.reload()
 alert("Couldn't save the linija");
 }
 }
+async like(e){
+  e.preventDefault();
+
+   
+    
+    try{
+
+              let config = {
+               params : {
+                idKorisnika: window.localStorage['id'],
+              
+       
+            
+                
+                
+                  videoId: this.state.video.id,
+                 
+                
+              }};
+    let response = await VideoAxios.get("/videos/like/",config);
+            //console.log(LikeDislikeDTO)
+           
+            window.location.reload()
+          //   var a = this.state.video;
+          //  a.brojDislajkova= a.brojDislajkova-1
+          //   this.setState({video:a})
+}catch(error){
+    alert("Couldn't save the like");
+}
+}
+async dislike(e){
+  e.preventDefault();
+      
+     
+        try{
+
+       
+          let config = {
+            params : {
+             idKorisnika: window.localStorage['id'],
+           
+    
+         
+             
+             
+               videoId: this.state.video.id,
+              
+             
+           }};
+    let response = await VideoAxios.get("/videos/dislike/", config);
+            //console.log(zadatakDTO)
+   window.location.reload()
+}catch(error){
+    alert("Couldn't save the like");
+}
+}
 goToEdit(id) {
   this.props.history.push("/videoEdit/"+id);
 
@@ -344,9 +424,13 @@ sort4(){
           && window.localStorage['id']!=this.state.video.korisnikId)
           ||window.localStorage['role']==null)?
           null:
-          <div><Button class="like" disabled='true'>
-            
-          {this.state.video.brojLajkova+"/"+this.state.video.brojDislajkova}</Button> 
+          <div>
+            {
+              console.log(this.state.lajkovi)
+            }
+               <Button style={{visibility:this.state.mapaLajkova[window.localStorage['id']]=='like'? 'hidden':'visible'}} onClick={(event)=>this.like(event)}>Like</Button> 
+               <Button style={{visibility:this.state.mapaLajkova[window.localStorage['id']]=='dislike'? 'hidden':'visible'}}  onClick={(event)=>this.dislike(event)}>Dislike</Button> 
+          {this.state.video.brojLajkova+"/"+this.state.video.brojDislajkova}
          </div>}
 
              

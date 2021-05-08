@@ -24,7 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.example.video.model.LikeDislike;
+import com.example.video.model.Video;
 import com.example.video.service.LikeDislikeService;
+import com.example.video.service.VideoService;
 import com.example.video.support.LikeDislikeDTOtoLikeDislike;
 import com.example.video.support.LikeDislikeToLikeDislikeDTO;
 import com.example.video.web.dto.LikeDislikeDTO;
@@ -35,6 +37,9 @@ public class LikeDislikeController {
 
 	@Autowired
     private LikeDislikeService	likeService;
+	
+	@Autowired
+    private VideoService	videoService;
 
     @Autowired
     private LikeDislikeDTOtoLikeDislike toLike;
@@ -51,10 +56,13 @@ public class LikeDislikeController {
         if(dto.getId() != null ) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-       
+        System.out.println(dto.getIsitLike()+""+dto.getId());
+        Video video = videoService.findOneId(dto.getVideoId());
+        
         LikeDislike like = toLike.convert(dto);
-
+        System.out.println(like.getId()); 
+//        video.getLajkovi().add(like);
+//        videoService.save(video);
         return new ResponseEntity<>(toLikeDto.convert(likeService.save(like)), HttpStatus.CREATED);
     }
 
